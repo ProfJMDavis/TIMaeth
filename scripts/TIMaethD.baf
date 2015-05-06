@@ -1,0 +1,158 @@
+//(TIMaeth Talk #4) LoveTalk #1
+
+IF
+    InParty(Myself)
+    See(Player1)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethLovetalks","GLOBAL",7)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(2)
+    AreaType(FOREST)
+    AreaType(OUTDOOR)
+    TimeOfDay(NIGHT)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    PlaySong(0)
+    PlaySound("TIApril")
+    StartDialogNoSet(Player1)
+END
+
+//(TIMaeth Talk #8) LoveTalk #2
+
+IF
+    InParty(Myself)
+    See(Player1)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethLoveTalks","GLOBAL",15)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+OR(21)
+    AreaCheck("%BaldursGateDocks_JopalinsTavern%")
+    AreaCheck("%Beregost_FeldepostsInn_L1%")
+    AreaCheck("%Beregost_JovialJuggler_L1%")
+    AreaCheck("%Beregost_RedSheaf_L1%")
+    AreaCheck("%Beregost_BurningWizard_L1%")
+    AreaCheck("%EBaldursGate_KeexieTavern_L1%")
+    AreaCheck("%EBaldursGate_ElfsongTavern_L1%")
+    AreaCheck("%EBaldursGate_Inn_L1%")
+    AreaCheck("%FriendlyArmInn_L1%")
+    AreaCheck("%Nashkel_Inn%")
+    AreaCheck("%NBaldursGate_ThreeOldKegs_L1%")
+    AreaCheck("%NEBaldursGate_BlushingMermaid_L1%")
+    AreaCheck("%NEBaldursGate_SplurgingSturgeon_L2%")
+    AreaCheck("%NEBaldursGate_SplurgingSturgeon_L1%")
+    AreaCheck("%NWBaldursGate_Helm&Cloak_L1%")
+    AreaCheck("%NWBaldursGate_Tavern_L1%")
+    AreaCheck("%SEBaldursGate_Inn_L1%")
+    AreaCheck("%SEBaldursGate_Blade&Stars_L1%")
+    AreaCheck("%SWBaldursGate_Tavern_L1%")
+    AreaCheck("%SWBaldursGate_YeOldeInn_L1%")
+    AreaCheck("%UlgothsBeard_Inn%")
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    PlaySong(0)
+    PlaySound("TIApril")
+    StartDialogNoSet(Player1)
+END
+
+//(TIMaeth Talk #17) Love Talk #7
+
+IF
+    InParty(Myself)
+    See(Player1)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethLoveTalks","GLOBAL",33)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    AreaType(FOREST)
+    TimeOfDay(NIGHT)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    PlaySong(0)
+    PlaySound("TIApril")
+    StartDialogNoSet(Player1)
+END
+
+//(TIMaeth Talk #20) LoveTalk #10
+
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethLoveTalks","GLOBAL",39)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+OR(21)
+    AreaCheck("%BaldursGateDocks_JopalinsTavern%")
+    AreaCheck("%Beregost_FeldepostsInn_L1%")
+    AreaCheck("%Beregost_JovialJuggler_L1%")
+    AreaCheck("%Beregost_RedSheaf_L1%")
+    AreaCheck("%Beregost_BurningWizard_L1%")
+    AreaCheck("%EBaldursGate_KeexieTavern_L1%")
+    AreaCheck("%EBaldursGate_ElfsongTavern_L1%")
+    AreaCheck("%EBaldursGate_Inn_L1%")
+    AreaCheck("%FriendlyArmInn_L1%")
+    AreaCheck("%Nashkel_Inn%")
+    AreaCheck("%NBaldursGate_ThreeOldKegs_L1%")
+    AreaCheck("%NEBaldursGate_BlushingMermaid_L1%")
+    AreaCheck("%NEBaldursGate_SplurgingSturgeon_L2%")
+    AreaCheck("%NEBaldursGate_SplurgingSturgeon_L1%")
+    AreaCheck("%NWBaldursGate_Helm&Cloak_L1%")
+    AreaCheck("%NWBaldursGate_Tavern_L1%")
+    AreaCheck("%SEBaldursGate_Inn_L1%")
+    AreaCheck("%SEBaldursGate_Blade&Stars_L1%")
+    AreaCheck("%SWBaldursGate_Tavern_L1%")
+    AreaCheck("%SWBaldursGate_YeOldeInn_L1%")
+    AreaCheck("%UlgothsBeard_Inn%")
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    PlaySong(0)
+    PlaySound("TIApril")
+    StartDialogNoSet(Player1)
+END
+
+//(TIMaeth Talk #23) LoveTalk #11
+
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethLoveTalks","GLOBAL",46)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(2)
+    AreaType(OUTDOOR)
+    AreaType(FOREST)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    PlaySong(0)
+    PlaySound("TIApril")
+    StartDialogNoSet(Player1)
+END
+

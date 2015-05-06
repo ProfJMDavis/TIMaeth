@@ -1,0 +1,10 @@
+IF %BGT_VAR%
+    Global("TIRoganExists","AR3700",0)
+    !Dead("TIRogan")
+    !Exists("TIRogan")
+
+THEN
+  RESPONSE #100
+    SetGlobal("TIRoganExists","AR3700",1)
+    CreateCreature("TIRogan",[2683.858]%FACE_0%)
+END

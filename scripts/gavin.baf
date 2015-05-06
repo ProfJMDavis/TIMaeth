@@ -1,0 +1,85 @@
+IF
+   CheckStatGT(Myself,40,INTOXICATION)
+   InParty(Myself)
+   InParty("TIMaeth")
+   InMyArea("TIMaeth")
+   CombatCounter(0)
+   !See([ENEMY])
+   !StateCheck(Myself,CD_STATE_NOTVALID)
+   !StateCheck("TIMaeth",CD_STATE_NOTVALID)
+   OR(2)
+   Global("TIMaethRomanceActive","GLOBAL", 0)
+   Global("TIMaethRomanceActive","GLOBAL", 3)
+   OR(2)
+   Global("B!GavinRomanceActive","GLOBAL", 0)
+   Global("B!GavinRomanceActive","GLOBAL", 3)
+   Global("TIMaethGavinRomanceActive","GLOBAL",1)
+   Global("TIMaethGavin5","GLOBAL",0)
+THEN
+RESPONSE #100
+   SetGlobal("TIMaethGavin5","GLOBAL",1)
+END
+
+IF
+   CheckStatGT(Myself,40,INTOXICATION)
+   InParty(Myself)
+   InParty("TIMaeth")
+   InMyArea("TIMaeth")
+   CombatCounter(0)
+   !See([ENEMY])
+   !StateCheck(Myself,CD_STATE_NOTVALID)
+   !StateCheck("TIMaeth",CD_STATE_NOTVALID)
+   Global("TIMaethRomanceActive","GLOBAL", 0)
+   Global("TIMaethRomanceActive","GLOBAL", 3)
+   OR(2)
+   Global("B!GavinRomanceActive","GLOBAL", 0)
+   Global("B!GavinRomanceActive","GLOBAL", 3)
+   Global("TIMaethGavinRomanceActive","GLOBAL",1)
+   Global("TIMaethGavin5","GLOBAL",1)
+THEN
+RESPONSE #100
+   StartDialogueNoSet("TIMaeth")
+END
+
+// morning after
+
+IF
+   InParty(Myself)
+   InParty("TIMaeth")
+   InMyArea("TIMaeth")
+   CombatCounter(0)
+   !See([ENEMY])
+   !StateCheck(Myself,CD_STATE_NOTVALID)
+   !StateCheck("TIMaeth",CD_STATE_NOTVALID)
+   Global("TIMartaRomanceActive","GLOBAL", 0)
+   Global("TIMartaRomanceActive","GLOBAL", 3)
+   OR(2)
+   Global("B!GavinRomanceActive","GLOBAL", 0)
+   Global("B!GavinRomanceActive","GLOBAL", 3)
+   Global("TIMaethGavinRomanceActive","GLOBAL",1)
+   PartyRested()
+   Global("TIMaethGavin6","GLOBAL",0)
+THEN
+RESPONSE #100
+	SetGlobal("TIMaethGavin6","GLOBAL",1)
+END
+
+IF
+   InParty(Myself)
+   InParty("TIMaeth")
+   InMyArea("TIMaeth")
+   CombatCounter(0)
+   !See([ENEMY])
+   !StateCheck(Myself,CD_STATE_NOTVALID)
+   !StateCheck("TIMaeth",CD_STATE_NOTVALID)
+   Global("TIMartaRomanceActive","GLOBAL", 0)
+   Global("TIMartaRomanceActive","GLOBAL", 3)
+   OR(2)
+   Global("B!GavinRomanceActive","GLOBAL", 0)
+   Global("B!GavinRomanceActive","GLOBAL", 3)
+   Global("TIMaethGavinRomanceActive","GLOBAL",1)
+   Global("TIMaethGavin6","GLOBAL",1)
+THEN
+RESPONSE #100
+	StartDialogueNoSet("TIMaeth")
+END

@@ -1,0 +1,43 @@
+ACTION_IF FILE_EXISTS ~override/TIMaeth.cre~ THEN BEGIN
+COPY_EXISTING ~TIMaeth.cre~ ~override~
+  SAY NAME1 ~Maethor~
+  SAY NAME2 ~Maethor~
+  WRITE_SHORT 0x244 0 // doesn't change
+  WRITE_ASCII  0x246 ~%TIBlade%~ #8 // the internal name of your kit, surrounded by %
+  WRITE_BYTE  0x247 0x40 // doesn't change
+  WRITE_ASCII 0x248 ~TIMaeth~ #8  //override script
+  WRITE_ASCII 0x280 ~TIMaeth~ #32  //DV
+  WRITE_ASCII 0x2cc ~TIMaeth~ #8   //pre-joining dialogue file
+  WRITE_ASCII 0X34 ~TIMaethS~ #8   //small portrait
+  WRITE_ASCII 0x3c ~TIMaethM~ #8   //medium portrait
+  ADD_CRE_ITEM ~TIMarEPM~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
+  ADD_CRE_ITEM ~shld01~ #0 #0 #0 ~IDENTIFIED~ ~SHIELD~
+  ADD_CRE_ITEM ~TIMarLSW~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~ EQUIP
+  ADD_CRE_ITEM ~potn08~ #0 #0 #0 ~IDENTIFIED~ ~QITEM1~
+  ADD_CRE_ITEM ~bow04~ #0 #0 #0 ~IDENTIFIED~ ~INV1~
+  ADD_CRE_ITEM ~arow02~ #20 #0 #0 ~IDENTIFIED~ ~QUIVER1~
+  ADD_CRE_ITEM ~arow02~ #20 #0 #0 ~IDENTIFIED~ ~QUIVER2~
+  ADD_CRE_ITEM ~arow02~ #20 #0 #0 ~IDENTIFIED~ ~QUIVER3~
+  ADD_CRE_ITEM ~tiflask~ #0 #0 #0 ~IDENTIFIED~ ~INV2~
+  END
+    ELSE BEGIN // the ELSE clause is entirely optional
+COPY ~TIMaeth/creatures/TIMaeth.cre~ ~override/TIMaeth.cre~ // Level 1 Maethor
+  SAY NAME1 ~Maethor~
+  SAY NAME2 ~Maethor~
+  WRITE_SHORT 0x244 0 // doesn't change
+  WRITE_ASCII  0x246 ~%TIBlade%~ #8 // the internal name of your kit, surrounded by %
+  WRITE_BYTE  0x247 0x40 // doesn't change
+  WRITE_ASCII 0x248 ~TIMaeth~ #8  //override script
+  WRITE_ASCII 0x280 ~TIMaeth~ #32  //DV
+  WRITE_ASCII 0x2cc ~TIMaeth~ #8   //pre-joining dialogue file
+  WRITE_ASCII 0X34 ~TIMaethS~ #8   //small portrait
+  WRITE_ASCII 0x3c ~TIMaethM~ #8   //medium portrait
+  ADD_CRE_ITEM ~TIMarEPM~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
+  ADD_CRE_ITEM ~shld01~ #0 #0 #0 ~IDENTIFIED~ ~SHIELD~
+  ADD_CRE_ITEM ~TIMarLSW~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~ EQUIP
+  ADD_CRE_ITEM ~potn08~ #0 #0 #0 ~IDENTIFIED~ ~QITEM1~
+  ADD_CRE_ITEM ~bow04~ #0 #0 #0 ~IDENTIFIED~ ~INV1~
+  ADD_CRE_ITEM ~arow02~ #20 #0 #0 ~IDENTIFIED~ ~QUIVER1~
+  ADD_CRE_ITEM ~arow02~ #20 #0 #0 ~IDENTIFIED~ ~QUIVER2~
+  ADD_CRE_ITEM ~arow02~ #20 #0 #0 ~IDENTIFIED~ ~QUIVER3~
+  ADD_CRE_ITEM ~tiflask~ #0 #0 #0 ~IDENTIFIED~ ~INV2~

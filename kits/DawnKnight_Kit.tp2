@@ -1,0 +1,208 @@
+//Component: Dawnknight Kit (Rogan)
+BEGIN ~Dawnknight Kit~
+ADD_KIT ~TIDawn~
+
+// appended to CLASWEAP.2da
+~TIDawn                 1           1           1           1           1           1           1           1~
+// appended column-wise to WEAPPROF.2da
+~TIDawn      3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  2  2  2  3  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 ~
+// appended to ABCLASRQ.2da
+~TIDawn                 10       6       10       6       15      16~
+// appended to ABCLSMOD.2da
+~TIDawn                 0        0       0       0       0       0~
+// appended to ABDCDSRQ.2da
+~TIDawn                 0        0       0       0       15      0~
+// appended to ABDCSCRQ.2da
+~TIDawn                 0        1      -1       0       0       0~
+// appended to ALIGNMNT.2da
+~TIDawn                 0        0       1       0       0       0       0       0       0~
+// appended to DUALCLAS.2da
+~TIDawn                 0        0       0       0       0       0~
+
+// path to your CLAB-style 2da file
+~TIRogan/kits/TICLABP3.2da~
+
+// PC races and classes allowed to use this kit, from KITTABLE.2da
+~K_P_H~
+
+// usability flags, added to the end of the KITLIST.2da entry
+~0x00000001  6~
+
+// HLA table to use; see LUABBR.2da
+~Pa0~
+
+// list of starting equipment for PCs starting in ToB. Appended column-wise to 25STWEAP.2da
+~PLAT23 NEWSM01 HELM07  BAG26  RING07  RING31  *  BOOT04  AMUL20  BRAC10  BELT06  AROW11  BULL03  BOLT06  POTN52  POTN04  POTN14  BOW04  *  SW1H73~
+
+// Lower, mixed, and help kit names and descriptions, added to KITLIST.2da
+SAY ~Dawnknight of Lathander~
+SAY ~Dawnknight of Lathander~
+SAY ~Dawnknight of Lathander: Through a select, worthy few shines the power of the divine. Called paladins, these noble souls dedicate their swords and lives to the battle against evil. Paladins of the Morninglord are among the best-loved heroes of Faerûn. They are loosely organized into a holy order called the Order of the Aster dedicated either to protection of their temples or to travelling freely, doing good.~
+
+COPY ~TIRogan/spells/CDLV1NA.spl~ ~override~
+SAY NAME1 ~Know Alignment~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~A know alignment spell enables the paladin to exactly read the aura of a creature.  If the creature rolls a successful saving throw vs. spell, the caster learns nothing about that particular creature from the casting.  When a character is hit by this spell, he will glow red if he's evil, green if he's good, and white if he's neutral.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/CDDTGOOD.spl~ ~override~
+SAY NAME1 ~Detect Good~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell discovers emanations of good from any creature. Any good creature within the range of the spell will glow green briefly.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/CDEVL10.spl~ ~override~
+SAY NAME1 ~Protect from Evil 10' Radius~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When this spell is cast, all creatures within a 10' radius are affected individually by 'protection from evil'.  It creates a magical barrier around the recipients at a distance of one foot. The barrier moves with the recipient and has two major effects: First, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of - 2 to each attack roll, and second, any saving throws caused by such attacks are made by the protected creature with a +2 bonus.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/CDNEGPP.spl~ ~override~
+SAY NAME1 ~Negative Plane Protection~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell affords the recipient partial protection from monsters with Negative Energy plane connections (such as vampires) and certain weapons and spells that drain energy levels. The Negative Plane Protection spell opens a channel to the Positive Energy plane, largely negating the effects of a negative energy attack. A protected creature struck by a negative energy attack is protected against any form of level draining for the duration of the spell, though they will still suffer normal hit point damage from level draining attacks, if applicable. This spell cannot be cast on the Negative Energy plane.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/EISPCL15.spl~ ~override~
+SAY NAME1 ~Smite Evil~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~With the Smite ability, the caster gains the ability to strike a mighty blow, knocking an opponent back for a considerable distance and stunning the opponent for 1 round. All attacks made in the first round are critical hits. The ability lasts for 2 rounds.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/NMCUREBD.spl~ ~override~
+SAY NAME1 ~Cure Blindness or Deafness~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~By touching the creature afflicted, the caster employing the spell can permanently cure some forms of blindness or deafness.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/RR#PALCD.spl~ ~override~
+SAY NAME1 ~Cure Disease~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~By laying her hands upon a sickly person, the caster can cure almost any disease with this spell.  The cure is permanent, but this does not grant the recipient of the spell immunity from further afflictions.  Feeblemind is also cured with this spell.  Some magically created diseases may not be curable by this spell.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/rr#paldi.spl~ ~override~
+SAY NAME1 ~Disease Immunity~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~Paladins, by virtue of their calling, are granted immunity to disease.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/RR#WSIC.spl~ ~override~
+SAY NAME1 ~Aura of Courage~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~A Paladin of the appropriate level is immune to fear (magical or otherwise). Each ally within 10 feet of the paladin gains a +4 morale bonus on saving throws against fear effects for 9 seconds. This ability functions while the paladin is conscious, but not if she is unconscious or dead.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPCL212.spl~ ~override~
+SAY NAME1 ~Detect Evil~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell discovers emanations of evil from any creature. Any evil creature within the range of the spell will glow red briefly.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPCL213.spl~ ~override~
+SAY NAME1 ~Protection from Evil~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When this spell is cast, it creates a magical barrier around the recipient at a distance of one foot. The barrier moves with the recipient and has two major effects: First, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of - 2 to each attack roll, and second, any saving throws caused by such attacks are made by the protected creature with a +2 bonus.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPIN109.spl~ ~override~
+SAY NAME1 ~Lay On Hands~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When casting this spell, and laying his hand upon a creature, the Paladin causes 8 points of wound or other injury damage to the creature's body to be healed. This healing cannot affect creatures without corporeal bodies, nor can it cure wounds of creatures not living or of extraplanar origin. Curing is permanent only insofar as the creature does not sustain further damage; caused wounds will heal - or can be cured - just as any normal injury.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPIN200.spl~ ~override~
+SAY NAME1 ~Cure Medium Wounds~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell is a more potent version of the cure light wounds spell. When laying his hand upon a creature, the paladin heals 17 points of wound or other injury damage to the creature's body. This healing cannot affect noncorporeal, nonliving, or extraplanar creatures. ~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR102.spl~ ~override~
+SAY NAME1 ~Command~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell enables the caster to command another creature to lie down and take no action (sleep) for a single round. The creature has a saving throw penalty of -1 (to save against this spell) for every two extra levels of the caster, to a maximum of -4 at 9th level.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR103.spl~ ~override~
+SAY NAME1 ~Cure Light Wounds~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When casting this spell, and laying his hand upon a creature, the caster causes wounds and other injuries to the creature's body to be healed. The priest can restore 1d8 + 1/level points of damage sustained by the target creature (up to a maximum of 1d8+5). This healing cannot affect creatures without corporeal bodies, nor can it cure wounds of creatures not living or of extraplanar origin.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR109.spl~ ~override~
+SAY NAME1 ~Sanctuary~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When the caster casts a Sanctuary spell, it causes all of his opponents to ignore the targets' existence as if he were invisible.  While protected by this spell, the subject cannot take direct offensive action without breaking the spell, but may use non-attack spells or otherwise act in any way that does not violate the prohibition against offensive action. Note that this spell does not prevent the operation of area attacks (such as fireball or curse).  This allows a warded priest to heal wounds, for example, or to bless himself.  He cannot cast spells on other creatures without ending the spell. ~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR111.spl~ ~override~
+SAY NAME1 ~Armor of Faith~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~The caster of the Armor of Faith receives significant protection against melee and missile attacks. This magical armor is a force of energy that absorbs a portion of the damage intended for the caster, effectively reducing the damage sustained by 20%. Multiple castings of this spell are not cumulative.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR201.spl~ ~override~
+SAY NAME1 ~Aid~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~The recipient of this spell gains a +1 bonus to attack rolls, damage rolls, and saving throws, plus 1d8 additional hit points +1 per level of the caster (up to a maximum of 1d8+10). The Aid spell allows the recipient to temporarily have more hit points than his full normal total. The bonus hit points are lost first when the recipient takes damage. Multiple castings of this spell are not cumulative.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR203.spl~ ~override~
+SAY NAME1 ~Chant~ // unidentified name for items OR spell name
+SAY NAME2 ~Unidentified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~By means of the chant spell, the caster brings special favour upon himself and his party, and causes harm to his enemies.  When the chant spell is completed, all attack and damage rolls and saving throws made by those in the area of effect who are friendly to the priest gain + 1 bonuses, while those of the priest's enemies suffer - 1 penalties.  This bonus/penalty continues as long as the caster continues to chant the mystic syllables - he may move around, enter combat, but casting another spell ends the chant spell.  Multiple chants are not cumulative; however, if the 3rd-level prayer spell is spoken, the effect is increased to +2 and -2.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR205.spl~ ~override~
+SAY NAME1 ~Find Traps~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When a caster expends a find traps spell, all traps - concealed normally or magically - of magical or mechanical nature become apparent to him. Once per round, all traps within a 30 foot radius of the caster will be revealed. A trap is any device or magical ward that meets three criteria: it can inflict a sudden or unexpected result, the spellcaster would view the result as undesirable or harmful, and the creator specifically intended the harmful or undesirable result as such. Thus, traps include glyphs and similar spells or devices.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR209.spl~ ~override~
+SAY NAME1 ~Know Opponent~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When this spell is cast, the caster's eyes glow with magical energy, enabling him to read the aura of a creature, and determine the creature's strengths and weaknesses. For the duration of the spell, the target's physical resistances are lowered by 10% and all attacks against the target creature are made with a +2 bonus to the attack roll. Certain magical devices negate the power of the Know Opponent spell, and the spell has no effect on creatures who don't emanate auras, such as constructs. Magic resistance does not affect this spell.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR210.spl~ ~override~
+SAY NAME1 ~Resist Fire and Cold~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When this spell is cast upon a creature, the creature's body is toughened to withstand heat and cold. The recipient can somewhat resist intense heat or cold (whether natural or magical in origin), such as red-hot charcoal, a large amount of burning oil, flaming swords, fireballs, burning hands, or wands of frost. In all of these cases, the temperature affects the creature to some extent. The recipient has all damage sustained by fire or cold reduced by 50%. Multiple castings of this spell are not cumulative.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR212.spl~ ~override~
+SAY NAME1 ~Slow Poison~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When this spell is cast upon a poisoned individual, it greatly slows the effects of venom, actually neutralizing all but the most deadly poisons.n~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR215.spl~ ~override~
+SAY NAME1 ~Cure Moderate Wounds~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When casting this spell, and laying his hand upon a creature, the priest causes wounds and other injuries to the creature's body to be healed. The priest can restore 2d8 + 1/level points of damage sustained by the target creature (up to a maximum of 2d8+10). This healing cannot affect creatures without corporeal bodies, nor can it cure wounds of creatures not living or of extraplanar origin.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR308.spl~ ~override~
+SAY NAME1 ~Remove Paralysis~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~By the use of this spell, the caster can free several creatures from the effects of any paralyzation or related magic (such as a ghoul's touch, Hold spell, or Power Word Stun).~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR315.spl~ ~override~
+SAY NAME1 ~Cure Serious Wounds~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When casting this spell, and laying his hand upon a creature, the caster causes wounds and other injuries to the creature's body to be healed. The priest can restore 3d8 + 1/level points of damage sustained by the target creature (up to a maximum of 3d8+15). This healing cannot affect creatures without corporeal bodies, nor can it cure wounds of creatures not living or of extraplanar origin.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR320.spl~ ~override~
+SAY NAME1 ~Repulse Undead~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell creates waves of positive energy that sweep outwards from the caster. This wave disrupts any undead that attempt to attack the caster, pushing them away from the caster for several seconds. There is one wave each round for the duration of the spell. All undead are affected, without a saving throw.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIRogan/spells/SPPR404.spl~ ~override~
+SAY NAME1 ~Neutralize Poison~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell removes all toxins from the body, both natural and magical in nature. When this spell is cast upon a poisoned individual, it immediately neutralizes any poison. In addition, for the duration of the spell, the recipient is immune to any poison it is exposed to, and spells like Poison and Cloudkill won't affect the protected creature.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells

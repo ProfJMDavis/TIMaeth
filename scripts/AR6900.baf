@@ -1,0 +1,10 @@
+IF
+Global("TIMaethExists","AR6900",0)
+!Dead("TIMaeth")
+!Exists("TIMaeth")
+
+THEN
+RESPONSE #100
+SetGlobal("TIMaethExists","AR6900",1)
+CreateCreature("TIMaeth",[1074.2049]%FACE_3%)
+END

@@ -1,0 +1,659 @@
+//Beginning Info:
+BACKUP ~TIMaeth/Backup~
+AUTHOR ~Tibicina~
+VERSION ~1.0~
+README ~TIMaeth/TIMaeth_Readme.txt~
+
+//Crossplatform var stuff
+ALWAYS
+ACTION_IF GAME_IS ~bgee~ THEN BEGIN
+  /*The player is using version BG:EE*/
+  PRINT ~BGEE install detected~
+  INCLUDE ~TIMaeth/lib/liam_bgee_vars.tpa~
+END ELSE BEGIN
+ACTION_IF GAME_IS ~tutu tutu_totsc~ THEN BEGIN
+    /*The player is using version Tutu*/
+    PRINT ~Tutu install detected.~
+    INCLUDE ~TIMaeth/lib/g3_tutu_cpmvars.tpa~
+END ELSE BEGIN
+ACTION_IF GAME_IS ~bgt~ THEN BEGIN
+        /*The player is using version BGT*/
+        PRINT ~BGT install detected.~
+        INCLUDE ~TIMaeth/lib/g3_bgt_cpmvars.tpa~
+        /*The player is not using an acceptable version*/
+END ELSE BEGIN FAIL ~Please install on BGEE, Tutu or BGT.~
+END
+
+DEFINE_ACTION_FUNCTION extend_area_script
+STR_VAR area=""
+top=""
+bottom=""
+BEGIN
+
+// find the area script from the area file
+COPY_EXISTING "%area%.are" override
+READ_ASCII 0x94 script
+BUT_ONLY
+
+// if it doesn't exist, give it a default name
+ACTION_IF "%script%" STRING_EQUAL "" BEGIN
+OUTER_INNER_PATCH_SAVE script "%area%" BEGIN
+REPLACE_TEXTUALLY "FW" "_AR" // TUTU naming conventions
+END
+END
+
+// extend the script
+ACTION_IF "%top%" STRING_COMPARE "" BEGIN
+EXTEND_TOP "%script%.bcs" "%top%" EVALUATE_BUFFER
+END
+ACTION_IF "%bottom%" STRING_COMPARE "" BEGIN
+EXTEND_BOTTOM "%script%.bcs" "%bottom%" EVALUATE_BUFFER
+END
+END
+
+ /* Face orientation for CreateCreature([xxx.yyy]%FACE_x%) */
+    OUTER_SPRINT ~FACE_0~ ~,0~
+    OUTER_SPRINT ~FACE_1~ ~,1~
+    OUTER_SPRINT ~FACE_2~ ~,2~
+    OUTER_SPRINT ~FACE_3~ ~,3~
+    OUTER_SPRINT ~FACE_4~ ~,4~
+    OUTER_SPRINT ~FACE_5~ ~,5~
+    OUTER_SPRINT ~FACE_6~ ~,6~
+    OUTER_SPRINT ~FACE_7~ ~,7~
+    OUTER_SPRINT ~FACE_8~ ~,8~
+    OUTER_SPRINT ~FACE_9~ ~,9~
+    OUTER_SPRINT ~FACE_10~ ~,10~
+    OUTER_SPRINT ~FACE_11~ ~,11~
+    OUTER_SPRINT ~FACE_12~ ~,12~
+    OUTER_SPRINT ~FACE_13~ ~,13~
+    OUTER_SPRINT ~FACE_14~ ~,14~
+    OUTER_SPRINT ~FACE_15~ ~,15~
+    OUTER_SPRINT ~FACE_16~ ~,16~
+END
+END
+END
+
+//Component: Add Tybalt
+BEGIN ~Maethor NPC~
+
+//Adds custom IsValidForPartyDialogue state
+APPEND ~STATE.IDS~
+  ~0x80101FEF CD_STATE_NOTVALID~
+  UNLESS ~CD_STATE_NOTVALID~
+
+// Fixing Imoen's dialogue file
+  /* Tutu: Giving Imoen a banter file entry in the interdi.2da */
+  ACTION_IF FILE_EXISTS_IN_GAME ~FW0100.are~ THEN BEGIN
+    APPEND ~interdia.2da~ ~IMOEN                    _BIMOEN~ UNLESS ~_\(BIMOEN\|bimoen\)~
+  END
+  /* BGT: Giving Imoen a banter file if the Fixpack isn't installed */
+  ACTION_IF NOT (FILE_EXISTS_IN_GAME ~cdbehbla.pro~) AND (FILE_EXISTS_IN_GAME ~AR7200.are~) THEN BEGIN
+    ACTION_IF FILE_EXISTS_IN_GAME ~saradush.mve~ THEN BEGIN
+      COPY_EXISTING ~interdia.2da~ ~override~
+        SET_2DA_ENTRY 17 1 2 ~BIMOEN2~ // fixes ToB version
+      BUT_ONLY_IF_IT_CHANGES
+    END ELSE BEGIN
+        APPEND ~interdia.2da~ ~IMOEN       BIMOEN2~ // fixes SoA version
+        UNLESS ~BIMOEN2~
+    END
+  END
+
+  /* Imoen BIMOEN.DLG rebuild */
+  ACTION_IF NOT (FILE_EXISTS_IN_GAME ~_bimoen.dlg~) AND (FILE_EXISTS_IN_GAME ~FW0100.are~) THEN BEGIN
+    COMPILE ~TIMaeth/dialogues/x#bimoen_tutu.d~
+  END ELSE BEGIN
+    ACTION_IF NOT (FILE_EXISTS_IN_GAME ~bimoen2.dlg~) AND (FILE_EXISTS_IN_GAME ~AR7200.are~) THEN BEGIN
+      COMPILE ~TIMaeth/dialogues/x#bimoen_bgt.d~
+    END
+  END
+
+  /* ACTION.IDS and TRIGGER.IDS patching to ToB - thanks, Cam, if you read it */
+  /* and GTIMES.IDS, ANIMATE.IDS patching to ToB, courtesy of the BG2 Fix Pack */
+  INCLUDE ~TIMaeth/lib/ids_entries_cleanup.tph~
+
+/* Tutu Area Script Assignment Patching: All Areas Script ID'd */
+ACTION_IF FILE_EXISTS_IN_GAME ~FW0100.are~ THEN BEGIN
+  INCLUDE ~TIMaeth/lib/tutu_area_script_assign.tph~
+END
+
+/* Area Type Flagging */
+/* ToSC only: Tutu and BGT */
+ACTION_IF (FILE_EXISTS_IN_GAME ~FW1500.are~) OR (FILE_EXISTS_IN_GAME ~ARW500.are~) THEN BEGIN // if TotSC is installed
+  COPY_EXISTING ~%IsleofBalduranN%.are~ ~override~
+                ~%IsleofBalduranS%.are~ ~override~
+                ~%DurlagsTower%.are~ ~override~
+                ~%Farmlands%.are~ ~override~
+    READ_BYTE  "0x48" "flags"
+    WRITE_BYTE "0x48" ("%flags%" BOR "0b00010001")
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+  /* FOREST and OUTDOOR: Tutu and BGT */
+ACTION_IF (FILE_EXISTS_IN_GAME ~FW0100.are~) OR (FILE_EXISTS_IN_GAME ~AR7200.are~) THEN BEGIN
+  COPY_EXISTING ~%FishingVillage%.are~ ~override~
+                ~%Peldvale%.are~ ~override~
+                ~%LionsWay%.are~ ~override~
+                ~%CoastWay%.are~ ~override~
+                ~%Larswood%.are~ ~override~
+                ~%ShipwrecksCoast%.are~ ~override~
+                ~%HighHedge%.are~ ~override~
+                ~%MutaminsGarden%.are~ ~override~
+                ~%Lighthouse%.are~ ~override~
+                ~%RedCanyons%.are~ ~override~
+                ~%SouthBeregostRoad%.are~ ~override~
+                ~%Ulcaster%.are~ ~override~
+                ~%ArchaeologicalSite%.are~ ~override~
+                ~%FishermansLake%.are~ ~override~
+                ~%NorthNashkelRoad%.are~ ~override~
+                ~%LonelyPeaks%.are~ ~override~
+                ~%FirewineBridge%.are~ ~override~
+                ~%BearRiver%.are~ ~override~
+                ~%ValleyoftheTombs%.are~ ~override~
+                ~%DryadFalls%.are~ ~override~
+                ~%FireLeafForest%.are~ ~override~
+                ~%GibberlingMountains%.are~ ~override~
+    READ_BYTE  "0x48" "flags"
+    WRITE_BYTE "0x48" ("%flags%" BOR "0b00010001")
+    BUT_ONLY_IF_IT_CHANGES
+
+/* OUTDOOR ONLY: Tutu and BGT */
+COPY_EXISTING ~%GnollStronghold%.are~ ~override~
+              ~%NashkelMines%.are~ ~override~
+              ~%FriendlyArmInn%.are~ ~override~
+              ~%Temple%.are~ ~override~
+              ~%NashkelCarnival%.are~ ~override~
+  READ_BYTE  "0x48" "flags"
+  WRITE_BYTE "0x48" ("%flags%" BOR "0b00000001")
+  BUT_ONLY_IF_IT_CHANGES
+
+/* CITY and OUTDOOR */
+COPY_EXISTING ~%WyrmsCrossing%.are~ ~override~
+              ~%Candlekeep_Ch6%.are~ ~override~
+              ~%Gullykin%.are~ ~override~
+  READ_BYTE  "0x48" "flags"
+  WRITE_BYTE "0x48" ("%flags%" BOR "0b00001001")
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+//Adding music
+COPY_EXISTING ~songlist.2da~ ~override~
+SET_2DA_ENTRY 2 1 2 ~Blank~
+SET_2DA_ENTRY 2 2 2 ~Blank.mus~
+
+//Copying audio files
+COPY ~TIMaeth/Audio~ ~override~
+
+// Adding Maethor .CRE
+ACTION_IF FILE_EXISTS ~override/TIMaeth.cre~ THEN BEGIN
+COPY_EXISTING ~TIMaeth/creatures/TIMaeth.cre~ ~override/TIMaeth.cre~
+  ADD_CRE_ITEM ~%tutu_var%helm09~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+  ADD_CRE_ITEM ~%tutu_var%TIMAREPM~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
+  ADD_CRE_ITEM ~%tutu_var%shld04~ #0 #0 #0 ~IDENTIFIED~ ~SHIELD~
+  ADD_CRE_ITEM ~%tutu_var%RING06~ #0 #0 #0 ~IDENTIFIED~ ~LRING~
+  ADD_CRE_ITEM ~%tutu_var%TIMARAM~ #0 #0 #0 ~IDENTIFIED~ ~AMULET~
+  ADD_CRE_ITEM ~%tutu_var%BOOT04~ #0 #0 #0 ~IDENTIFIED~ ~BOOTS~
+  ADD_CRE_ITEM ~%tutu_var%TIMARLSW~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~ EQUIP
+  ADD_CRE_ITEM ~%tutu_var%AROW02~ #20 #20 #20 ~IDENTIFIED~ ~QUIVER~
+  ADD_CRE_ITEM ~%tutu_var%TIFLASK~ #0 #0 #0 ~IDENTIFIED~ ~QITEM1~
+  ADD_CRE_ITEM ~%tutu_var%potn08~ #5 #0 #0 ~IDENTIFIED~ ~QITEM2~
+  ADD_CRE_ITEM ~%tutu_var%TIMARBOW~ #0 #0 #0 ~IDENTIFIED~ ~INV1~
+  SAY NAME1 ~Maethor~
+  SAY NAME2 ~Maethor~
+//  WRITE_LONG 0x244 (TIBlade + 0x4000) << 16
+//  WRITE_BYTE  0x245 0x02
+//  WRITE_BYTE 0x246 %TIBlade% // the internal name of your kit, surrounded by %
+//  WRITE_BYTE  0x247 0x40 // doesn't change
+BUT_ONLY_IF_IT_CHANGES
+END ELSE BEGIN // the ELSE clause is entirely optional
+COPY ~TIMaeth/creatures/TIMaeth.cre~ ~override/TIMaeth.cre~
+  ADD_CRE_ITEM ~%tutu_var%helm09~ #0 #0 #0 ~IDENTIFIED~ ~HELMET~
+  ADD_CRE_ITEM ~%tutu_var%TIMAREPM~ #0 #0 #0 ~IDENTIFIED~ ~ARMOR~
+  ADD_CRE_ITEM ~%tutu_var%shld04~ #0 #0 #0 ~IDENTIFIED~ ~SHIELD~
+  ADD_CRE_ITEM ~%tutu_var%RING06~ #0 #0 #0 ~IDENTIFIED~ ~LRING~
+  ADD_CRE_ITEM ~%tutu_var%TIMARAM~ #0 #0 #0 ~IDENTIFIED~ ~AMULET~
+  ADD_CRE_ITEM ~%tutu_var%BOOT04~ #0 #0 #0 ~IDENTIFIED~ ~BOOTS~
+  ADD_CRE_ITEM ~%tutu_var%TIMARLSW~ #0 #0 #0 ~IDENTIFIED~ ~WEAPON1~ EQUIP
+  ADD_CRE_ITEM ~%tutu_var%AROW02~ #20 #20 #20 ~IDENTIFIED~ ~QUIVER~
+  ADD_CRE_ITEM ~%tutu_var%TIFLASK~ #0 #0 #0 ~IDENTIFIED~ ~QITEM1~
+  ADD_CRE_ITEM ~%tutu_var%potn08~ #2 #0 #0 ~IDENTIFIED~ ~QITEM2~
+  ADD_CRE_ITEM ~%tutu_var%TIMARBOW~ #0 #0 #0 ~IDENTIFIED~ ~INV1~
+  SAY NAME1 ~Maethor~
+  SAY NAME2 ~Maethor~
+//  WRITE_LONG 0x244 (TIBlade + 0x4000) << 16
+//  WRITE_BYTE  0x245 0x02
+//  WRITE_BYTE 0x246 %TIBlade% // the internal name of your kit, surrounded by %
+//  WRITE_BYTE  0x247 0x40 // doesn't change
+
+SAY BIO ~Maethor is reluctant to speak when you ask her about her past. When she finally responds, she says she was born on the outskirts of the forest of Tethir to a well-known courtesan. When civil war broke out and her mother tried to leave, she was killed by a mob on the road. Luckily, Maethor was rescued by a party of knights from Amn who had been sent to investigate the source of the violence and aid in the restoration of order. Their leader, Sir Tybalt Grenfell, took her to his home in Athkatla and began training Maethor as a paladin. Later she encountered a knight-errant of Corellon, Sir Finnilithui, who initated her into the service of The Blade of Sahandrine. She and her sister eventually travelled to Beregost, where they currently live.~
+
+SAY INITIAL_MEETING ~Greetings, friend! May we speak?~ [TIM01]
+SAY MORALE ~We must retreat!~ [TIM02]
+SAY HAPPY ~Corellon will bless us for that.~ [TIM03]
+SAY UNHAPPY_ANNOYED ~Obviously we disagree on what we should do.~ [TIM04]
+SAY UNHAPPY_SERIOUS ~Avgaro! Don't do that!~ [TIM05]
+SAY UNHAPPY_BREAKING ~I'm sorry. We must part ways.~ [TIM06]
+SAY LEADER ~I humbly accept this responsibility.~ [TIM07]
+SAY TIRED ~No more. I am fatigued.~ [TIM08]
+SAY BORED ~Gwaem! Do we not have much to do?~ [TIM09]
+SAY BATTLE_CRY1 ~Maetho!~ [TIM10]
+SAY BATTLE_CRY2 ~Corellon, guide my hand!~ [TIM11]
+SAY BATTLE_CRY3 ~You will fall!~ [TIM12]
+SAY BATTLE_CRY4 ~DIE!~ [TIM13]
+SAY DAMAGE ~Uhhhh!~ [TIM14]
+SAY DYING ~Ai!!~ [TIM15]
+SAY HURT ~Edraith enni!~ [TIM16]
+SAY AREA_FOREST ~This reminds me of home.~ [TIM17]
+SAY AREA_CITY ~Eccchhhh! Why must cities always smell foul?~ [TIM18]
+SAY AREA_DUNGEON ~Edhel are not meant to be underground.~ [TIM19]
+SAY AREA_DAY ~Ah! A new day.~ [TIM20]
+SAY AREA_NIGHT ~Tôl daw. Night comes.~ [TIM21]
+SAY SELECT_COMMON1 ~Yes?~ [TIM22]
+SAY SELECT_COMMON2 ~Is there something you need?~ [TIM23]
+SAY SELECT_COMMON3 ~Hmmm?~ [TIM24]
+SAY SELECT_COMMON4 ~What?~ [TIM25]
+SAY SELECT_COMMON5 ~At your service.~ [TIM26]
+SAY SELECT_COMMON6 ~I'm listening.~ [TIM27]
+SAY SELECT_ACTION1 ~Ma!~ [TIM28]
+SAY SELECT_ACTION2 ~I will do as you say.~ [TIM29]
+SAY SELECT_ACTION3 ~Very well!~ [TIM30]
+SAY SELECT_ACTION4 ~Willing and able~ [TIM31]
+SAY SELECT_ACTION5 ~Not hard at all~ [TIM32]
+SAY SELECT_ACTION6 ~uh-huh.~ [TIM33]
+SAY SELECT_ACTION7 ~Right!~ [TIM34]
+SAY INTERACTION1 ~Guren glassui.~ [TIM35]
+SAY INTERACTION2 ~If you must stare at me, try not to be so obvious about it!~ [TIM36]
+SAY INTERACTION3 ~Ouch! Watch where you're walking!~ [TIM37]
+SAY INTERACTION4 ~Thank you... I think.~ [TIM38]
+SAY INTERACTION5 ~Does anyone know a marching song?~ [TIM39]
+SAY INSULT ~Hû 'waur!~ [TIM43]
+SAY COMPLIMENT1 ~*sigh* I bainas nîn.~ [TIM44]
+SAY COMPLIMENT2 ~*sigh* So beautiful!~ [TIM40]
+//SAY COMPLIMENT3 ~~ []
+//SAY SPECIAL1 ~~ []
+//SAY SPECIAL2 ~~ []
+//SAY SPECIAL3 ~~ []
+SAY REACT_TO_DIE_GENERAL ~Alas, alas. Farewell comes too soon!~ [TIM45]
+SAY REACT_TO_DIE_SPECIFIC ~Av'wanno, i meleth nîn!~ [TIM46]
+SAY REACT_TO_DIE_SPECIFIC ~Guren níniatha n'i lû n'i a-govenitham, i 'wador nin.~ [TIM47]
+SAY REACT_TO_DIE_SPECIFIC ~Gwanno vi naeg, suni 'waur!~ [TIM48]
+//SAY MISCELLANEOUS ~~ []
+//SAY RESPONSE_TO_COMPLIMENT1 ~Thank you... I think.~ [TIM38]
+//SAY RESPONSE_TO_COMPLIMENT2 ~Le hannon!~ [TIM42]
+//SAY RESPONSE_TO_COMPLIMENT3 ~~
+//SAY RESPONSE_TO_INSULT1 ~~
+//SAY RESPONSE_TO_INSULT2 ~~
+//SAY RESPONSE_TO_INSULT3 ~~
+//SAY DIALOG_HOSTILE ~~ []
+//SAY DIALOG_DEFAULT ~~ []
+SAY SELECT_RARE1 ~I'm ready.~ [TIM49]
+SAY SELECT_RARE2 ~I've got it.~ [TIM50]
+SAY CRITICAL_HIT ~Gell!~ [TIM51]
+SAY CRITICAL_MISS ~Rhaich!~ [TIM52]
+SAY TARGET_IMMUNE ~My weapon didn't do anything!~ [TIM53]
+SAY INVENTORY_FULL ~Sorry about that!~ [TIM54]
+SAY PICKED_POCKET ~Whoa! I didn't know that I could do that!~  [TIM56]
+SAY HIDDEN_IN_SHADOWS ~I didn't know this was possible.~ [TIM58]
+SAY SPELL_DISRUPTED ~Oh no! My spell!~ [TIM55]
+SAY SET_A_TRAP ~It's set.~ [TIM57]
+
+// Adding Liria
+ACTION_IF FILE_EXISTS ~override/TILiria.cre~ THEN BEGIN
+COPY_EXISTING ~TIMaeth/creatures/TILiria.cre~ ~override~
+  SAY NAME1 ~Liria~
+  SAY NAME2 ~Liria~
+  SAY BIO ~When you ask her about her past, Liria says she was born in on the outskirts of Suldanellessar in the forest of Tethyr. She and her sister travelled to Beregost, where they currently live.~
+  WRITE_ASCII 0x248 ~TILiria~ #8  //override script
+  WRITE_ASCII 0x280 ~TILiria~ #32  //DV
+  WRITE_ASCII 0x2cc ~TILiria~ #8   //pre-joining dialogue file
+  WRITE_ASCII 0X34 ~TILiriaS~ #8   //small portrait
+  WRITE_ASCII 0x3c ~TILiriaM~ #8   //medium portrait
+  END
+  ELSE BEGIN // the ELSE clause is entirely optional
+COPY ~TIMaeth/creatures/TILiria.cre~ ~override/TILiria.cre~ // Level 1 Tybalt
+  SAY NAME1 ~Liria~
+  SAY NAME2 ~Liria~
+  SAY BIO ~When you ask her about her past, Liria says she was born in on the outskirts of Suldanellessar in the forest of Tethyr. She and her sister travelled to Beregost, where they currently live.~
+  WRITE_ASCII 0x248 ~TILiria~ #8  //override script
+  WRITE_ASCII 0x280 ~TILiria~ #32  //DV
+  WRITE_ASCII 0x2cc ~TILiria~ #8   //pre-joining dialogue file
+  WRITE_ASCII 0X34 ~TILiriaS~ #8   //small portrait
+  WRITE_ASCII 0x3c ~TILiriaM~ #8   //medium portrait
+
+SAY INITIAL_MEETING ~Yes?~ [REDf]
+SAY DAMAGE ~Ohhh!~ [REDl]
+SAY DYING ~Oh no...I...I can't...~ [REDm]
+SAY SELECT_COMMON1 ~Yes?~ [REDf]
+SAY SELECT_COMMON2 ~Waiting with baited breath!~ [REDg]
+SAY SELECT_COMMON3 ~Listening.~ [REDh]
+SAY SELECT_COMMON4 ~*Chuckle* Rrrright!~ [RED_]
+SAY SELECT_COMMON5 ~Yes?~ [REDf]
+SAY SELECT_COMMON6 ~Listening.~ [REDh]
+SAY DIALOGUE_HOSTILE ~You're mean! Get away from me!~ [TIMArt05]
+SAY DIALOGUE_DEFAULT ~*Whistling.*~ [REDu]
+
+//Component: Adding Artamir .Cre (Alters BOYBE2)
+COPY ~TIMaeth/creatures/BOYBE2.cre~ ~override/BOYBE2.cre~
+SAY NAME1 ~Artamir~
+SAY NAME2 ~Artamir~
+WRITE_ASCII 0x248 ~TIArta~ #8 // override
+WRITE_ASCII 0x2cc ~TIArta~ #8 // dialogue
+WRITE_ASCII 0X34 ~TIArtaS~ #8 //small portrait
+WRITE_ASCII 0x280 ~TIArta~ #32 //DV
+SAY INITIAL_MEETING ~Mama said not to talk to strangers.~ [TIMArt00]
+SAY DAMAGE~~
+SAY DYING~~
+SAY SELECT_COMMON1 ~Hi! I'm Artamir Taurverir! My mama's real sad! Will you help her find Uncle Tyb?~ [TIMArt01]
+SAY SELECT_COMMON2 ~My daddy is the commander of all the elven forces in Suldanessellar!~ [TIMArt02]
+SAY SELECT_COMMON3 ~Someday I'm going to join my father in Tethir and defend my people!~ [TIMArt03]
+SAY SELECT_COMMON4 ~My mama's really pretty. Everyone says so.~ [TIMArt04]
+SAY DIALOGUE_HOSTILE ~You're mean! Get away from me!~ [TIMArt05]
+SAY DIALOGUE_DEFAULT ~Mama said not to talk to strangers.~ [TIMArt00]
+
+//Component: Adding Helpless Tybalt .CRE
+ACTION_IF FILE_EXISTS ~override/TITybalt.cre~ THEN BEGIN
+COPY_EXISTING ~TIMaeth/creatures/TITybalt.cre~ ~override/TITybalt.cre~
+  SAY NAME1 ~Tybalt~
+  SAY NAME2 ~Tybalt~
+  SAY BIO ~When you ask him about his past, Tybalt says to shut up.~
+//  WRITE_LONG 0x244 (TIFree + 0x4000) << 16
+//  WRITE_BYTE  0x245 0x02
+//  WRITE_BYTE  0x246 ~%TIFree%~ // the internal name of your kit, surrounded by %
+//  WRITE_BYTE  0x247 0x40 // doesn't change
+  WRITE_ASCII 0x248 ~TITybalt~ #8  //override script
+  WRITE_ASCII 0x280 ~TITybalt~ #32  //DV
+  WRITE_ASCII 0x2cc ~TITybalt~ #8   //pre-joining dialogue file
+  WRITE_ASCII 0X34 ~TITybS~ #8   //small portrait
+  WRITE_ASCII 0x3c ~TITybM~ #8   //medium portrait
+BUT_ONLY
+END ELSE BEGIN // the ELSE clause is entirely optional
+COPY ~TIMaeth/creatures/TITybalt.cre~ ~override/TITybalt.cre~ // Level 1 Tybalt
+  SAY NAME1 ~Tybalt~
+  SAY NAME2 ~Tybalt~
+  SAY BIO ~When you ask him about his past, Tybalt says to shut up.~
+//  WRITE_LONG 0x244 (TIFree + 0x4000) << 16
+//  WRITE_BYTE  0x245 0x02
+//  WRITE_BYTE  0x246 ~%TIFree%~ // the internal name of your kit, surrounded by %
+//  WRITE_BYTE  0x247 0x40 // doesn't change
+  WRITE_ASCII 0x248 ~TITybalt~ #8  //override script
+  WRITE_ASCII 0x280 ~TITybalt~ #32  //DV
+  WRITE_ASCII 0x2cc ~TITybalt~ #8   //pre-joining dialogue file
+  WRITE_ASCII 0X34 ~TybaltS~ #8   //small portrait
+  WRITE_ASCII 0x3c ~TybaltM~ #8   //medium portrait
+
+SAY INITIAL_MEETING ~Yes?~
+SAY DAMAGE ~Ow!~
+SAY DYING ~AH!~
+SAY SELECT_COMMON1 ~Yeah?~
+SAY SELECT_COMMON2 ~What do you need?~
+SAY SELECT_COMMON3 ~Grunt.~
+SAY SELECT_COMMON4 ~What?~
+SAY SELECT_COMMON5 ~Yes?~
+SAY SELECT_COMMON6 ~I'm listening.~
+SAY DIALOGUE_HOSTILE ~You dare to challenge me?!~
+SAY DIALOGUE_DEFAULT ~*Whistling.*~
+END
+
+//Component: Adding Normal Tybalt .CRE
+ACTION_IF FILE_EXISTS ~override/TITybalI.cre~ THEN BEGIN
+COPY_EXISTING ~TIMaeth/creatures/TITybalI.cre~ ~override/TITybalI.cre~
+  SAY NAME1 ~Tybalt~
+  SAY NAME2 ~Tybalt~
+  SAY BIO ~When you ask him about his past, Tybalt says to shut up.~
+//  WRITE_LONG 0x244 (TIFree + 0x4000) << 16
+//  WRITE_BYTE  0x245 0x02
+//  WRITE_BYTE  0x246 ~%TIFree%~ // the internal name of your kit, surrounded by %
+//  WRITE_BYTE  0x247 0x40 // doesn't change
+  WRITE_ASCII 0x248 ~TITybalI~ #8  //override script
+  WRITE_ASCII 0x280 ~TITybalI~ #32  //DV
+  WRITE_ASCII 0x2cc ~TITybalt~ #8   //pre-joining dialogue file
+  WRITE_ASCII 0X34 ~TITybS~ #8   //small portrait
+  WRITE_ASCII 0x3c ~TITybM~ #8   //medium portrait
+BUT_ONLY
+END ELSE BEGIN // the ELSE clause is entirely optional
+COPY ~TIMaeth/creatures/TITybalI.cre~ ~override/TITybalI.cre~ // Level 1 Tybalt
+  SAY NAME1 ~Tybalt~
+  SAY NAME2 ~Tybalt~
+  SAY BIO ~When you ask him about his past, Tybalt says to shut up.~
+//  WRITE_LONG 0x244 (TIFree + 0x4000) << 16
+//  WRITE_BYTE  0x245 0x02
+//  WRITE_BYTE  0x246 ~%TIFree%~ // the internal name of your kit, surrounded by %
+//  WRITE_BYTE  0x247 0x40 // doesn't change
+  WRITE_ASCII 0x248 ~TITybalI~ #8  //override script
+  WRITE_ASCII 0x280 ~TITybalI~ #32  //DV
+  WRITE_ASCII 0x2cc ~TITybalt~ #8   //pre-joining dialogue file
+  WRITE_ASCII 0X34 ~TybaltS~ #8   //small portrait
+  WRITE_ASCII 0x3c ~TybaltM~ #8   //medium portrait
+
+SAY INITIAL_MEETING ~Yes?~
+SAY DAMAGE ~Ow!~
+SAY DYING ~AH!~
+SAY SELECT_COMMON1 ~Yeah?~
+SAY SELECT_COMMON2 ~What do you need?~
+SAY SELECT_COMMON3 ~Grunt.~
+SAY SELECT_COMMON4 ~What?~
+SAY SELECT_COMMON5 ~Yes?~
+SAY SELECT_COMMON6 ~I'm listening.~
+SAY DIALOGUE_HOSTILE ~You dare to challenge me?!~
+SAY DIALOGUE_DEFAULT ~*Whistling.*~
+END
+
+//Component: Adding Rogan .Cre
+ACTION_IF FILE_EXISTS ~override/Rogan.cre~ THEN BEGIN
+COPY_EXISTING ~TIMaeth/creatures/TIRogan.cre~ ~override/TIRogan.cre~
+ADD_CRE_ITEM ~TI1SCRL~ #0 #0 #0 ~IDENTIFIED~ ~INV1~
+  SAY NAME1 ~Rogan~
+  SAY NAME2 ~Rogan~
+  SAY BIO ~When you ask him about his past, Rogan shrugs and says that he has had a surprisingly quiet life despite his heritage as an Aasimar.~
+//  WRITE_LONG 0x244 (TIDawn + 0x4000) << 16
+//  WRITE_BYTE  0x245 0x02
+//  WRITE_BYTE 0x246 ~%TIDawn%~ // the internal name of your kit, surrounded by %
+//  WRITE_BYTE  0x247 0x40 // doesn't change
+  WRITE_ASCII 0x248 ~TIRogan~ #8  //override script
+  WRITE_ASCII 0x280 ~TIRogan~ #32  //DV
+  WRITE_ASCII 0x2cc ~TIRogan~ #8   //pre-joining dialogue file
+  WRITE_ASCII 0X34 ~TIRoganS~ #8   //small portrait
+  WRITE_ASCII 0x3c ~TIRoganM~ #8   //medium portrait
+BUT_ONLY
+END ELSE BEGIN // the ELSE clause is entirely optional
+COPY ~TIMaeth/creatures/TIRogan.cre~ ~override/TIRogan.cre~ // Level 1 Tybalt
+ADD_CRE_ITEM ~TI1SCRL~ #0 #0 #0 ~IDENTIFIED~ ~INV1~
+  SAY NAME1 ~Rogan~
+  SAY NAME2 ~Rogan~
+  SAY BIO ~When you ask him about her past, Rogan shrugs and says that he has had a surprisingly quiet life despite his heritage as an Aasimar.~
+//  WRITE_LONG 0x244 (TIDawn + 0x4000) << 16
+//  WRITE_BYTE  0x245 0x02
+//  WRITE_BYTE 0x246 ~%TIDawn%~ // the internal name of your kit, surrounded by %
+//  WRITE_BYTE  0x247 0x40 // doesn't change
+  WRITE_ASCII 0x248 ~TIRogan~ #8  //override script
+  WRITE_ASCII 0x280 ~TIRogan~ #32  //DV
+  WRITE_ASCII 0x2cc ~TIRogan~ #8   //pre-joining dialogue file
+  WRITE_ASCII 0X34 ~TIRoganS~ #8   //small portrait
+  WRITE_ASCII 0x3c ~TIRoganM~ #8   //medium portrait
+
+SAY INITIAL_MEETING ~Yes?~ [taldarky]
+SAY DAMAGE ~Uhh!~ [taldarkl]
+SAY DYING ~Ahhh... My quest ends here...~ [taldarkm]
+SAY SELECT_COMMON1 ~Yes?~ [taldarky]
+SAY SELECT_COMMON2 ~How may I proceed?~ [taldark0]
+SAY SELECT_COMMON3 ~Excuse me?~ [taldarkh]
+SAY SELECT_COMMON4 ~What?~ [taldarkf]
+SAY SELECT_COMMON5 ~Yeah?~ [taldarky]
+SAY SELECT_COMMON6 ~I'm listening.~ [taldarkg]
+SAY DIALOGUE_HOSTILE ~Vengeance will be mine!~ [taldarks]
+SAY DIALOGUE_DEFAULT ~A world of possibility for anyone.~ [taldarko]
+END
+
+// Compiling Dialogues and Scripts
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/TILiria.d~
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/TIArta.d~
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/TITybalt.d~
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/TIRogan.d~
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/BTIMaeth.d~
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/TIMaethJ.d~
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/TIMaethP.d~
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/TIMaeth.d~
+
+COMPILE EVALUATE_BUFFER ~TIMaeth/scripts/TIMaeth.baf~
+COMPILE EVALUATE_BUFFER ~TIMaeth/scripts/TIMaethD.baf~
+COMPILE EVALUATE_BUFFER ~TIMaeth/scripts/TIMaethG.baf~
+COMPILE EVALUATE_BUFFER ~TIMaeth/scripts/TIMaethT.baf~
+COMPILE EVALUATE_BUFFER ~TIMaeth/scripts/TIBLARS.baf~
+
+//Component: This is adding our area files to the game
+LAF extend_area_script STR_VAR area="%Beregost%" top="TIMaeth/scripts/AR6747.baf" END
+LAF extend_area_script STR_VAR area="%CoastWay%" top="TIMaeth/scripts/AR6900.baf" END
+LAF extend_area_script STR_VAR area="%Nashkel%" top="TIMaeth/scripts/AR4800.baf" END
+LAF extend_area_script STR_VAR area="%CloakwoodMines_L4%" top="TIMaeth/scripts/AR1803.baf" END
+
+//Component: Copying images
+ACTION_IF (FILE_EXISTS_IN_GAME ~FW0100.are~) OR (FILE_EXISTS_IN_GAME ~ar7200.are~) THEN BEGIN
+  COPY ~TIMaeth/images~ ~override~
+END ELSE BEGIN ACTION_IF FILE_EXISTS_IN_GAME ~neera.dlg~ THEN BEGIN
+  COPY ~TIMaeth/images/bgee~ ~override~
+END
+END
+
+// Copying custom items and spells
+COPY ~TIMaeth/items/TIMAREPM.itm~ ~override/TIMAREPM.itm~
+  SAY NAME1 ~Maethor's Elven Plate Mail~
+  SAY NAME2 ~Maethor's Elven Plate Mail~
+  SAY DESC ~Also known as the Guardian of the forest, this plate mail is incredibly light and flexible. Used by elite Armathors of Cormanthor, the armor offers great protection from hostile magics - something of great value in the fabled city. This particular set of plate mail, showing considerable wear, was given to Maethor Grenfell by her maternal great-grandfather.~
+
+COPY ~TIMaeth/items/TIMARLSW.itm~ ~override/TIMARLSW.itm~
+  SAY NAME1 ~Maethor's Long Sword~
+  SAY NAME2 ~Maethor's Long Sword~
+  SAY DESC ~These swords are usually referred to as doubled-edged swords, war swords, or military swords. This particular long sword was made for a smaller hand, with a double-edged blade 30 inches long set in a 4 inch handle and bearing the elven inscription: 'Edi meleth anin edhil ristathon.' This blade was given to Maethor Grenfell by her maternal great-grandfather.~
+
+COPY ~TIMaeth/items/TIMARBOW.itm~ ~override/TIMARBOW.itm~
+  SAY NAME1 ~Maethor's Long Bow~
+  SAY NAME2 ~Maethor's Long Bow~
+  SAY DESC ~The long bow is similar to the short bow, except that the staff is about as high as the archer is, ranging from 72-78 inches in length. This long bow is shorter, measuring 65 inches in length. Though the long bow is slightly slower than the short bow, it has better range and is more accurate. This one has been enhanced with magical properties. This particular bow was granted to Maethor Grenfell  by her maternal great-grandfather.~
+
+COPY ~TIMaeth/items/TIFLASK.itm~ ~override/TIFLASK.itm~
+  SAY NAME1 ~Flask~
+  SAY NAME2 ~Maethor's Flask~
+  SAY UNIDENTIFIED_DESC ~This small silver hip flask is mostly plain, decorated only with the initials M.G. and the inscription 'In case of emergency, Bottoms Up.' Inside is a sweetish beverage.~
+  SAY DESC ~This small silver hip flask was given to Maethor Grenfell by Tybalt Grenfell at her initiation into the Blades of Corellon. It is mostly plain, decorated only with the initials M.G. and the inscription 'In case of emergency, Bottoms Up.' The container is magically enhanced to refill itself when emptied.
+
+The beverage in the flask is also imbued with a powerful enchantment, which blesses the drinker with great bravery and morale in battle. The imbiber's attack rolls, damage rolls, and morale are all raised by 2. The potion also increases the recipient's hit points by 10%, and these bonus hit points are lost first when the recipient takes damage. Multiple uses of this potion are not cumulative. The effect lasts for 5 turns, and cannot be dispelled.
+
+Usable By:
+ All~
+
+COPY ~TIMaeth/items/TIMARAM.itm~ ~override/TIMARAM.itm~
+  SAY NAME1 ~Maethor's Ring~
+  SAY NAME2 ~Maethor's Ring~
+  SAY DESC ~This ring was given to Maethor by her childhood lover Cýrontîr. It has cut flecks of many different stones all around shaped like birds and the faces of flowers; topaz, garnet, and amethyst, emerald, sapphire, and ruby. At the crest, there's even a small diamond sun, faceted and glittering.~
+
+COPY ~TIMaeth/items/UGCLCK.itm~ ~override/UGCLCK.itm~
+  SAY NAME1 ~Cloak~
+  SAY NAME2 ~Ugly Cloak~
+  SAY UNIDENTIFIED_DESC ~This cloak is so ugly that if one looks at it for more than a second, one's eyes start to uncontrollably water and blur one's vision.~
+  SAY DESC ~This cloak was given to <CHARNAME> by Maethor as a love token. Although it has powerful magical properties, it is so ugly that if one looks at it for more than a second, one's eyes start to uncontrollably water and blur one's vision.~
+
+COPY ~TIMaeth/spells/SPPR177.spl~ ~override~
+  SAY NAME1 ~Change Appearance~ // unidentified name for items OR spell name
+  SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+  SAY UNIDENTIFIED_DESC ~When casting this spell, the caster causes their appearance to change~ // unidentified description for items, spell description for spells
+  SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR178.spl~ ~override~
+  SAY NAME1 ~Revert Appearance~ // unidentified name for items OR spell name
+  SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+  SAY UNIDENTIFIED_DESC ~When casting this spell, the caster causes their appearance to revert to their original description.~ // unidentified description for items, spell description for spells
+  SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/items/TILYRAM.itm~ ~override/TILYRAM.itm~
+  SAY NAME1 ~The Blossom of Elhan~
+  SAY NAME2 ~The Blossom of Elhan~
+  SAY DESC ~This necklace is composed of a living flower encased in a protective cage of mithril silver. The blossom was plucked on impulse from the Tree of Life in Suldanessellar by Elhan Taurverir upon falling in love with Liria Sullussaechen.~
+
+COPY ~TIMaeth/items/TILYRBOW.itm~ ~override/TILYRBOW.itm~
+  SAY NAME1 ~Liria's Long Bow~
+  SAY NAME2 ~Liria's Long Sword~
+  SAY DESC ~The long bow is similar to the short bow, except that the staff is about as high as the archer is, usually 72 to 78 inches in length. This particular bow is a little shorter than most, at 70 inches. This bow was given to Liria Sullusaechen by her maternal great-grandfather.~
+
+COPY ~TIMaeth/items/TILYRCHN.itm~ ~override/TILYRCHN.itm~
+  SAY NAME1 ~Liria's Elven Chain Mail~
+  SAY NAME2 ~Liria's Elven Chain Mail~
+  SAY DESC ~The delicate yet sturdy craftsmanship of the Elven races allows them to design many beautiful yet utilitarian goods. Among these is Elven chain mail, which is so finely wrought that it can be worn under normal clothing without revealing its presence. This and its lightness allows it to be worn by thieves and fighter/mages with few restrictions. This set was given to Liria Sullussaechen by her maternal great-grandfather.~
+
+COPY ~TIMaeth/items/TILYRSS.itm~ ~override/TILYRSS.itm~
+  SAY NAME1 ~Liria's Short Sword~
+  SAY NAME2 ~Liria's Short Sword~
+  SAY DESC ~This short sword has been forged by hands both magical and highly skilled.  Neither nick nor stain mar the flawless blade.  When used in battle the blade radiates magic and gifts the wielder with increased skill. This particular sword carries the inscription in elven: "Edi melethon maethon." It was given to Liria Sullusaechen by her maternal great-grandfather.~
+
+COPY ~TIMaeth/items/TITYPLA.itm~ ~override/TITYPLA.itm~
+  SAY NAME1 ~Tybalt's Field Plate~
+  SAY NAME2 ~Tybalt's Field Plate~
+  SAY DESC ~Field Plate is a piece of armor similar to plate mail, but made to protect the entire body. It is composed of a breast plate and several other armor pieces for the arms and legs with chain mail meshing to protect the joints. This magical specimen is made of mithril, a very rare, silvery, glistening metal that is lighter than iron but just as hard. As a result this set of field plate does not encumber more than chain mail and is treated as a medium armor for purposes of movement and other limitations. This set was custom made for Tybalt Grenfell by Taerom Fuiruim of Beregost~
+
+COPY ~TIMaeth/items/TITYSW.itm~ ~override/TITYSW.itm~
+  SAY NAME1 ~Tybalt's Long Sword~
+  SAY NAME2 ~Tybalt's Long Sword~
+  SAY DESC ~These swords are usually referred to as doubled-edged swords, war swords, or military swords.  In many cases, the long sword has a single-edged blade. This long sword is tailored to best suit a taller man: 45 inches, of which the blade is 38 inches of the total length. It has a double-edged blade with the elven inscription: 'Anin leithian e-minn a miss vaer maethathon aen.' This blade was custom made for Tybalt Grenfell by Taerom Fuiruim of Beregost at the request of Maethor Grenfell.~
+
+COPY ~TIMaeth/items/TITYSHL.itm~ ~override/TITYSHL.itm~
+  SAY NAME1 ~Tybalt's Shield~
+  SAY NAME2 ~Tybalt's Shield~
+  SAY DESC ~A standard magical shield given to elite troops and bodyguards, this particular shield is unremarkable except for the magical bonus to armor class enfolded into the metal. It was made for Tybalt Grenfell  by Taerom Fuiruim of Beregost.~
+
+COPY ~TIMaeth/items/S!RING01.itm~ ~override/S!RING01.itm~
+  SAY NAME1 ~Ring of Protection +4~
+  SAY NAME2 ~Ring of Protection +4~
+  SAY DESC ~Using an old and untested recipe, two Rings of Protection +3 have been successfully combined to this mighty protective item.  The recipe is now confirmed at last.
+
+STATISTICS:
+
+Armor Class:  +4 bonus
+Saving Throws:  +4 bonus
+
+Not Usable By:
+ Wizard Slayer~
+
+COPY ~TIMaeth/items/THRING02.itm~ ~override/THRING02.itm~
+  SAY NAME1 ~Ring of Free Action +2~
+  SAY NAME2 ~Ring of Free Action +2~
+  SAY DESC ~This ring was changed magically. It combines the abilities of a Ring of Protection +2: 'The Guard's Ring' and a Ring of Free Action.
+
+STATISTICS:
+
+The wearer is immune to every effect, magical or not, that affects mobility in any way. This includes haste and slow spells.
+
+Armor Class: +2 bonus
+Saving Throws: +2 bonus
+
+Not Usable By:
+ Wizard Slayer~
+
+COPY ~TIMaeth/items/TIRoSW.itm~ ~override/TIRoSW.itm~
+  SAY NAME1 ~Rogan's Two-Handed Sword~
+  SAY NAME2 ~Rogan's Two-Handed Sword~
+  SAY DESC ~The two-handed sword is a derivative of the long sword. Weaponsmiths have always looked for ways to improve existing weapons, and in an effort to improve the long sword, the blade was lengthened. Eventually, the handle had to be extended and two hands became necessary to properly swing the sword.  Rogan's sword is particularly good at its job, as he has had it enchanted and tailored to suit his particular physique.~
+
+COPY ~TIMaeth/items/TI1SCRL.itm~ ~override/TI1SCRL.itm~
+  SAY NAME2 ~Letter from Tybalt Grenfell to Liria Sullusaechen~
+  SAY NAME2 ~Letter from Tybalt Grenfell to Liria Sullusaechen~
+  SAY DESC ~Beloved Liria,
+I know you must be worrying about my extended absence, so I have written this letter for you. My investigations in Nashkel have turned up nothing of any great import. I had a long discussion with the mayor, Berron Ghastkill. The town wrestles continually with the relative profitability of their mining operation, but, so far, have not resorted to slave labor to keep costs down. I have heard rumours, however, that there is another mine somewhere on the Sword Coast. I shall have to speak to my colleagues at the Temple of Helm in Baldur's Gate for more information. In any event, I do not expect that I will be able to rendezvous with you in Beregost as promised, but I shall definately see you within a fortnight. Give my love to Maethor.
+Yours ever,
+Tyb~
+
+COPY ~TIMaeth/items/TI2SCRL.itm~ ~override/TI2SCRL.itm~
+  SAY NAME2 ~Letter from Tybalt Grenfell to Liria Sullusaechen~
+  SAY NAME2 ~Letter from Tybalt Grenfell to Liria Sullusaechen~
+  SAY DESC ~Beloved Liria,
+I hope the last letter I wrote last month has reached you. Rogan should have delivered it to you upon his return to Beregost, but he might well have been delayed by his business with Nalin in Nashkel. In any event, I will update you in this letter. I have discovered from my dwarven friend Haskel Orothair  that there was, in fact, an iron mine relatively near Baldur's Gate that was flooded by a river breach some time ago. The organization behind the kidnappings might easily conceal a significant numbers of slaves within such a mine in order to drain it, reseal it, and work as laborers. But why? And who? The scope of such a plot would require an immensely powerful and well-funded organization. I will continue my investigation.
+Much love,
+Tyb
+P.S. I have heard from your beloved E. He has repeated his wish that Artamir join him in Suldanessellar. We need to discuss this when I see you next. I cannot understand your continued attachment to the man when he wishes to take our child away.~
+
+APPEND ~pdialog.2da~
+~TIMaeth               TIMaethP               TIMaethJ               TIMaethD~
+UNLESS ~TIMaeth~
+
+APPEND ~interdia.2da~
+~TIMaeth               BTIMaeth~
+UNLESS ~TIMaeth~
+END
+END

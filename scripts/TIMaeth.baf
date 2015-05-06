@@ -1,0 +1,1549 @@
+//Reassign Soundset
+
+IF
+HotKey(T)
+THEN
+RESPONSE #100
+ClearAllActions() // This ensures that all action lists are cancelled before beginning the cutscene
+StartCutSceneMode()
+StartCutScene("TIMaethT")
+END
+
+IF
+HotKey(G)
+THEN
+RESPONSE #100
+ClearAllActions() // This ensures that all action lists are cancelled before beginning the cutscene
+StartCutSceneMode()
+StartCutScene("TIMaethG")
+END
+
+//Levelling
+
+IF
+  InParty(Myself)
+  Global("TIMaethJoined","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethJoined","GLOBAL",1)
+END
+
+IF
+  InParty(Myself)
+  Global("TIMaethJoined","GLOBAL",1)
+  Global("TIMaethLeveled","GLOBAL",0)
+  XPLT(Player1,1500)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethLeveled","GLOBAL",1)
+    AddXPObject("TIMaeth",1000) // level 1
+END
+
+IF
+  InParty(Myself)
+  Global("TIMaethJoined","GLOBAL",1)
+  Global("TIMaethLeveled","GLOBAL",0)
+  XPGT(Player1,1499)
+  XPLT(Player1,3000)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethLeveled","GLOBAL",1)
+    AddXPObject("TIMaeth",2251) // level 2
+END
+
+IF
+  InParty(Myself)
+  Global("TIMaethJoined","GLOBAL",1)
+  Global("TIMaethLeveled","GLOBAL",0)
+  XPGT(Player1,2999)
+  XPLT(Player1,6000)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethLeveled","GLOBAL",1)
+    AddXPObject("TIMaeth",4501) // level 3
+END
+
+IF
+  InParty(Myself)
+  Global("TIMaethJoined","GLOBAL",1)
+  Global("TIMaethLeveled","GLOBAL",0)
+  XPGT(Player1,5999)
+  XPLT(Player1,13000)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethLeveled","GLOBAL",1)
+    AddXPObject("TIMaeth",9001) // level 4
+END
+
+IF
+  InParty(Myself)
+  Global("TIMaethJoined","GLOBAL",1)
+  Global("TIMaethLeveled","GLOBAL",0)
+  XPGT(Player1,12999)
+  XPLT(Player1,27500)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethLeveled","GLOBAL",1)
+    AddXPObject("TIMaeth",18001) // level 5
+END
+
+IF
+  InParty(Myself)
+  Global("TIMaethJoined","GLOBAL",1)
+  Global("TIMaethLeveled","GLOBAL",0)
+  XPGT(Player1,27499)
+  XPLT(Player1,55000)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethLeveled","GLOBAL",1)
+    AddXPObject("TIMaeth",36001) // level 6
+END
+
+IF
+  InParty(Myself)
+  Global("TIMaethJoined","GLOBAL",1)
+  Global("TIMaethLeveled","GLOBAL",0)
+  XPGT(Player1,54999)
+  XPLT(Player1,110000)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethLeveled","GLOBAL",1)
+    AddXPObject("TIMaeth",75001) // level 7
+END
+
+IF
+  InParty(Myself)
+  Global("TIMaethJoined","GLOBAL",1)
+  Global("TIMaethLeveled","GLOBAL",0)
+  XPGT(Player1,109999)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethLeveled","GLOBAL",1)
+    AddXPObject("TIMaeth",150001) // level 8
+END
+
+//Set Timers
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethTalks","GLOBAL",0)
+    Global("TIMaethLoveTalks","GLOBAL",0)
+THEN
+  RESPONSE #100
+    RealSetGlobalTimer("TIMaethTalksTimer","GLOBAL",180)
+    SetGlobal("TIMaethTalks","GLOBAL",1)
+    SetGlobal("TIMaethLoveTalks","GLOBAL",1)
+END
+
+//Romance/Friend Check
+
+//MaethCheck Friend
+
+IF
+    InParty(Myself)
+    Global("TIMaethFriendMatch","GLOBAL",0)
+    Global("TIMaethFriendCheck","GLOBAL",0)
+    !Alignment(Player1,MASK_EVIL)
+    CheckStatGT(Player1,8,CHR)
+    CheckStatGT(Player1,8,WIS)
+    ReputationGT(Player1,10)
+	    !Kit(Player1,ASSASIN)
+    !Kit(Player1,BOUNTYHUNTER)
+    !Kit(Player1,MAGESCHOOL_NECROMANCER)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethFriendMatch","GLOBAL",1)
+    SetGlobal("TIMaethFriendCheck","GLOBAL",1)
+    SetGlobal("TIMaethFriendActive","GLOBAL",1)
+END
+
+//MaethCheck Romance
+
+IF
+    InParty(Myself)
+    Global("TIMaethRomanceMatch","GLOBAL",0)
+    Global("TIMaethRomanceCheck","GLOBAL",0)
+    Alignment(Player1,MASK_GOOD)
+    CheckStatGT(Player1,11,CHR)
+    CheckStatGT(Player1,13,WIS)
+    ReputationGT(Player1,10)
+	!Class (Player1,THIEF)
+	!RACE (Player1, HALFORC)
+    !Kit(Player1,ASSASIN)
+    !Kit(Player1,BOUNTYHUNTER)
+    !Kit(Player1,MAGESCHOOL_NECROMANCER)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethRomanceMatch","GLOBAL",1)
+    SetGlobal("TIMaethRomanceCheck","GLOBAL",1)
+    SetGlobal("TIMaethRomanceActive","GLOBAL",1)
+END
+
+
+//MaethCheck Fail
+
+IF
+    InParty(Myself)
+    Global("TIMaethFriendMatch","GLOBAL",0)
+    Global("TIMaethFriendCheck","GLOBAL",0)
+    Global("TIMaethRomanceMatch","GLOBAL",0)
+    Global("TIMaethRomanceCheck","GLOBAL",0)
+    OR(5)
+    Alignment(Player1,MASK_EVIL)
+    Class (Player1,THIEF)
+    Kit(Player1,ASSASIN)
+    Kit(Player1,BOUNTYHUNTER)
+    Kit(Player1,MAGESCHOOL_NECROMANCER)
+THEN
+    RESPONSE #100
+      SetGlobal("TIMaethRomanceMatch","GLOBAL",0)
+      SetGlobal("TIMaethRomanceCheck","GLOBAL",1)
+      SetGlobal("TIMaethFriendMatch","GLOBAL",0)
+      SetGlobal("TIMaethFriendCheck","GLOBAL",1)
+END
+
+//Dialogues
+
+IF
+    InParty(Myself)
+    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    !AreaType(DUNGEON)
+    OR(17)
+      Global("TIMaethTalks","GLOBAL",1)  //1 - No conditions: Friend Talk
+      Global("TIMaethTalks","GLOBAL",3)  //2 - No conditions: Friend Talk
+      Global("TIMaethTalks","GLOBAL",5)  //3 - No conditions: Friend Talk
+//      Global("TIMaethLoveTalks","GLOBAL",7)  //4 - LT 1: Reverie uses dream script TIMaethD.BAF
+      Global("TIMaethTalks","GLOBAL",9)  //5 - Post-rest, but not necessarily after LT 1
+      Global("TIMaethTalks","GLOBAL",11) //6 - No conditions
+      Global("TIMaethTalks","GLOBAL",13) //7 - No conditions
+//      Global("TIMaethLoveTalks","GLOBAL",15) //8 - LT 2: Bathtime uses dream script TIMaethD.BAF
+      Global("TIMaethLoveTalks","GLOBAL",17) //9 - Post-rest LT 3
+      Global("TIMaethTalks","GLOBAL",19) //10 - No conditions
+      Global("TIMaethTalks","GLOBAL",21) //11 - Post-rest
+      Global("TIMaethLoveTalks","GLOBAL",23) //12 - LT 4: Childhood Revisited
+      Global("TIMaethTalks","GLOBAL",25) //13 - No conditions
+      Global("TIMaethLoveTalks","GLOBAL",27) //14 - LT 5: 'Lennas nin.'
+      Global("TIMaethLoveTalks","GLOBAL",29) //15 - LT 6: Jealousy
+      Global("TIMaethTalks","GLOBAL",31) //16 - No conditions
+//      Global("TIMaethLoveTalks","GLOBAL",33) //17 - LT 7: First Times uses dream script TIMaethD.BAF
+//      Global("TIMaethLoveTalks","GLOBAL",35) //18 - LT 8: Morning After
+      Global("TIMaethLoveTalks","GLOBAL",37) //19 - LT 9: Jealousy Revistited
+//      Global("TIMaethLoveTalks","GLOBAL",39) //20 - LT 10: uses dream script TIMaethD.BAF
+      Global("TIMaethTalks","GLOBAL",41) //21 - No conditions
+      Global("TIMaethTalks","GLOBAL",43) //22 - No conditions
+//      Global("TIMaethLoveTalks","GLOBAL",45) //23 - LT 11: Concerning Rings uses dream script TIMaethD.BAF
+THEN
+  RESPONSE #100
+  IncrementGlobal("TIMaethTalks","GLOBAL",1)
+  IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+
+END
+
+//UnRomanced Version
+
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",1)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    !AreaType(DUNGEON)
+    OR(15)
+      Global("TIMaethTalks","GLOBAL",2)  //1
+      Global("TIMaethTalks","GLOBAL",4)  //2
+      Global("TIMaethTalks","GLOBAL",6)  //3
+//      Global("TIMaethLoveTalks","GLOBAL",8)  //4  Outdoor, Night, Pre-rest
+//      Global("TIMaethLoveTalks","GLOBAL",10)  //5  Outdoor, Day, Post-rest
+      Global("TIMaethTalks","GLOBAL",12) //6
+      Global("TIMaethTalks","GLOBAL",14) //7
+//      Global("TIMaethLoveTalks","GLOBAL",16) //8  Inn, Night, Pre-rest
+//      Global("TIMaethLoveTalks","GLOBAL",18) //9  Inn, Day, Post-rest 'Morning After'
+      Global("TIMaethTalks","GLOBAL",20) //10
+      Global("TIMaethTalks","GLOBAL",22) //11
+      Global("TIMaethLoveTalks","GLOBAL",24) //12
+      Global("TIMaethTalks","GLOBAL",26) //13
+      Global("TIMaethLoveTalks","GLOBAL",28) //14
+      Global("TIMaethLoveTalks","GLOBAL",30) //15
+      Global("TIMaethTalks","GLOBAL",32) //16
+//      Global("TIMaethLoveTalks","GLOBAL",34) //17  Forest, Night, Pre-Rest
+//      Global("TIMaethLoveTalks","GLOBAL",36) //18  Forest, Day, Post-rest 'Morning After'
+      Global("TIMaethLoveTalks","GLOBAL",38) //19
+//      Global("TIMaethLoveTalks","GLOBAL",40) //20  Inn, Night, Pre-rest
+      Global("TIMaethTalks","GLOBAL",42) //21  Inn, Post-rest
+      Global("TIMaethTalks","GLOBAL",44) //22
+//      Global("TIMaethLoveTalks","GLOBAL",46) //23  Outdoor, Night, Pre-rest
+
+THEN
+  RESPONSE #100
+    StartDialogueNoSet(Player1)
+  END
+
+//Romanced Version
+
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    !AreaType(DUNGEON)
+    OR(15)
+      Global("TIMaethTalks","GLOBAL",2)  //1
+      Global("TIMaethTalks","GLOBAL",4)  //2
+      Global("TIMaethTalks","GLOBAL",6)  //3
+//      Global("TIMaethLoveTalks","GLOBAL",8)  //4  Outdoor, Night, Pre-rest (Love Talk 1)
+//      Global("TIMaethLoveTalks","GLOBAL",10)  //5  Outdoor, Day, Post-rest
+      Global("TIMaethTalks","GLOBAL",12) //6
+      Global("TIMaethTalks","GLOBAL",14) //7
+//      Global("TIMaethLoveTalks","GLOBAL",16) //8  Inn, Night, Pre-rest (Love Talk 2)
+//      Global("TIMaethLoveTalks","GLOBAL",18) //9  Inn, Day, Post-rest 'Morning After'  (Love Talk 3)
+      Global("TIMaethTalks","GLOBAL",20) //10
+      Global("TIMaethTalks","GLOBAL",22) //11  Post-rest
+      Global("TIMaethLoveTalks","GLOBAL",24) //12  (Love Talk 4)
+      Global("TIMaethTalks","GLOBAL",26) //13
+      Global("TIMaethLoveTalks","GLOBAL",28) //14  (Love Talk 5)
+      Global("TIMaethLoveTalks","GLOBAL",30) //15  (Love Talk 6)
+      Global("TIMaethTalks","GLOBAL",32) //16
+//      Global("TIMaethLoveTalks","GLOBAL",34) //17  Forest, Night, Pre-rest (Love Talk 7)
+//      Global("TIMaethLoveTalks","GLOBAL",36) //18  Forest, Day, Post-rest 'Morning After'(Love Talk 8)
+      Global("TIMaethLoveTalks","GLOBAL",38) //19
+//      Global("TIMaethTalks","GLOBAL",40) //20  Inn, Night, Pre-Rest  (Love Talk 10)
+      Global("TIMaethTalks","GLOBAL",42) //21  Inn, Post-Rest
+      Global("TIMaethTalks","GLOBAL",44) //22
+//      Global("TIMaethLoveTalks","GLOBAL",46) //23  Outdoor, Night, Pre-rest (Love Talk 11)
+
+THEN
+  RESPONSE #100
+PlaySong(0)
+PlaySound("TIApril")
+StartDialogueNoSet(Player1)
+END
+
+//Maethtalk 5: No Romance
+
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",1)
+    Global("TIMaethTalks","GLOBAL",9)
+    PartyRested()
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    AreaType(OUTDOOR)
+    TimeOfDay(DAY)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+
+END
+
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethTalks","GLOBAL",10)
+    !Global("TIMaethRomanceActive","GLOBAL",1)
+    PartyRested()
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    AreaType(OUTDOOR)
+    TimeOfDay(DAY)
+THEN
+  RESPONSE #100
+  StartDialogueNoSet(Player1)
+END
+
+//Romanced
+
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethTalks","GLOBAL",9)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    PartyRested()
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    AreaType(OUTDOOR)
+    TimeOfDay(DAY)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+
+END
+
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethTalks","GLOBAL",10)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    PartyRested()
+    See(Player1)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    AreaType(OUTDOOR)
+    TimeOfDay(DAY)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("TIApril")
+    StartDialogueNoSet(Player1)
+END
+
+//(TIMaeth Talk #9) LoveTalk #3
+
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethLoveTalks","GLOBAL",17)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    See(Player1)
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    PartyRested()
+OR(21)
+        AreaCheck("%BaldursGateDocks_JopalinsTavern%")
+     	AreaCheck("%Beregost_FeldepostsInn_L1%")
+     	AreaCheck("%Beregost_JovialJuggler_L1%")
+     	AreaCheck("%Beregost_RedSheaf_L1%")
+     	AreaCheck("%Beregost_BurningWizard_L1%")
+     	AreaCheck("%EBaldursGate_KeexieTavern_L1%")
+     	AreaCheck("%EBaldursGate_ElfsongTavern_L1%")
+     	AreaCheck("%EBaldursGate_Inn_L1%")
+     	AreaCheck("%FriendlyArmInn_L1%")
+     	AreaCheck("%Nashkel_Inn%")
+     	AreaCheck("%NBaldursGate_ThreeOldKegs_L1%")
+     	AreaCheck("%NEBaldursGate_BlushingMermaid_L1%")
+     	AreaCheck("%NEBaldursGate_SplurgingSturgeon_L2%")
+     	AreaCheck("%NEBaldursGate_SplurgingSturgeon_L1%")
+     	AreaCheck("%NWBaldursGate_Helm&Cloak_L1%")
+     	AreaCheck("%NWBaldursGate_Tavern_L1%")
+     	AreaCheck("%SEBaldursGate_Inn_L1%")
+     	AreaCheck("%SEBaldursGate_Blade&Stars_L1%")
+     	AreaCheck("%SWBaldursGate_Tavern_L1%")
+     	AreaCheck("%SWBaldursGate_YeOldeInn_L1%")
+     	AreaCheck("%UlgothsBeard_Inn%")
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethLoveTalks","GLOBAL",18)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    See(Player1)
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    PartyRested()
+OR(21)
+        AreaCheck("%BaldursGateDocks_JopalinsTavern%")
+     	AreaCheck("%Beregost_FeldepostsInn_L1%")
+     	AreaCheck("%Beregost_JovialJuggler_L1%")
+     	AreaCheck("%Beregost_RedSheaf_L1%")
+     	AreaCheck("%Beregost_BurningWizard_L1%")
+     	AreaCheck("%EBaldursGate_KeexieTavern_L1%")
+     	AreaCheck("%EBaldursGate_ElfsongTavern_L1%")
+     	AreaCheck("%EBaldursGate_Inn_L1%")
+     	AreaCheck("%FriendlyArmInn_L1%")
+     	AreaCheck("%Nashkel_Inn%")
+     	AreaCheck("%NBaldursGate_ThreeOldKegs_L1%")
+     	AreaCheck("%NEBaldursGate_BlushingMermaid_L1%")
+     	AreaCheck("%NEBaldursGate_SplurgingSturgeon_L2%")
+     	AreaCheck("%NEBaldursGate_SplurgingSturgeon_L1%")
+     	AreaCheck("%NWBaldursGate_Helm&Cloak_L1%")
+     	AreaCheck("%NWBaldursGate_Tavern_L1%")
+     	AreaCheck("%SEBaldursGate_Inn_L1%")
+     	AreaCheck("%SEBaldursGate_Blade&Stars_L1%")
+     	AreaCheck("%SWBaldursGate_Tavern_L1%")
+     	AreaCheck("%SWBaldursGate_YeOldeInn_L1%")
+     	AreaCheck("%UlgothsBeard_Inn%")
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("TIApril")
+    StartDialogNoSet(Player1)
+END
+
+//TIMaeth Talk #11: No Romance
+
+IF
+    InParty(Myself)
+    Global("TIMaethTalks","GLOBAL",21)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",1)
+    PartyRested()
+    See(Player1)
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    AreaType(OUTDOOR)
+    TimeOfDay(DAY)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    Global("TIMaethTalks","GLOBAL",22)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",1)
+    PartyRested()
+    See(Player1)
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    AreaType(OUTDOOR)
+    TimeOfDay(DAY)
+THEN
+  RESPONSE #100
+    StartDialogNoSet(Player1)
+END
+
+//Romanced
+
+IF
+    InParty(Myself)
+    Global("TIMaethTalks","GLOBAL",21)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    PartyRested()
+    See(Player1)
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    AreaType(OUTDOOR)
+    TimeOfDay(DAY)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    Global("TIMaethTalks","GLOBAL",22)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    PartyRested()
+    See(Player1)
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    AreaType(OUTDOOR)
+    TimeOfDay(DAY)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("TIApril")
+    StartDialogNoSet(Player1)
+END
+
+//(MaethTalk #18) Love Talk #8
+
+IF
+    InParty(Myself)
+    Global("TIMaethLoveTalks","GLOBAL",35)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    PartyRested()
+    See(Player1)
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    AreaType(FOREST)
+    TimeOfDay(DAY)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    Global("TIMaethLoveTalks","GLOBAL",36)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    PartyRested()
+    See(Player1)
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    AreaType(FOREST)
+    TimeOfDay(DAY)
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("TIApril")
+    StartDialogNoSet(Player1)
+END
+
+//(MaethTalk #21) Love Talk #11
+
+IF
+    InParty(Myself)
+    Global("TIMaethLoveTalks","GLOBAL",41)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    See(Player1)
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    PartyRested()
+OR(21)
+        AreaCheck("%BaldursGateDocks_JopalinsTavern%")
+     	AreaCheck("%Beregost_FeldepostsInn_L1%")
+     	AreaCheck("%Beregost_JovialJuggler_L1%")
+     	AreaCheck("%Beregost_RedSheaf_L1%")
+     	AreaCheck("%Beregost_BurningWizard_L1%")
+     	AreaCheck("%EBaldursGate_KeexieTavern_L1%")
+     	AreaCheck("%EBaldursGate_ElfsongTavern_L1%")
+     	AreaCheck("%EBaldursGate_Inn_L1%")
+     	AreaCheck("%FriendlyArmInn_L1%")
+     	AreaCheck("%Nashkel_Inn%")
+     	AreaCheck("%NBaldursGate_ThreeOldKegs_L1%")
+     	AreaCheck("%NEBaldursGate_BlushingMermaid_L1%")
+     	AreaCheck("%NEBaldursGate_SplurgingSturgeon_L2%")
+     	AreaCheck("%NEBaldursGate_SplurgingSturgeon_L1%")
+     	AreaCheck("%NWBaldursGate_Helm&Cloak_L1%")
+     	AreaCheck("%NWBaldursGate_Tavern_L1%")
+     	AreaCheck("%SEBaldursGate_Inn_L1%")
+     	AreaCheck("%SEBaldursGate_Blade&Stars_L1%")
+     	AreaCheck("%SWBaldursGate_Tavern_L1%")
+     	AreaCheck("%SWBaldursGate_YeOldeInn_L1%")
+     	AreaCheck("%UlgothsBeard_Inn%")
+THEN
+  RESPONSE #100
+    IncrementGlobal("TIMaethTalks","GLOBAL",1)
+    IncrementGlobal("TIMaethLoveTalks","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    Global("TIMaethLoveTalks","GLOBAL",46)
+    Global("TIMaethShutUp","GLOBAL",0)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    See(Player1)
+//    RealGlobalTimerExpired("TIMaethTalksTimer","GLOBAL")
+    PartyRested()
+OR(21)
+        AreaCheck("%BaldursGateDocks_JopalinsTavern%")
+     	AreaCheck("%Beregost_FeldepostsInn_L1%")
+     	AreaCheck("%Beregost_JovialJuggler_L1%")
+     	AreaCheck("%Beregost_RedSheaf_L1%")
+     	AreaCheck("%Beregost_BurningWizard_L1%")
+     	AreaCheck("%EBaldursGate_KeexieTavern_L1%")
+     	AreaCheck("%EBaldursGate_ElfsongTavern_L1%")
+     	AreaCheck("%EBaldursGate_Inn_L1%")
+     	AreaCheck("%FriendlyArmInn_L1%")
+     	AreaCheck("%Nashkel_Inn%")
+     	AreaCheck("%NBaldursGate_ThreeOldKegs_L1%")
+     	AreaCheck("%NEBaldursGate_BlushingMermaid_L1%")
+     	AreaCheck("%NEBaldursGate_SplurgingSturgeon_L2%")
+     	AreaCheck("%NEBaldursGate_SplurgingSturgeon_L1%")
+     	AreaCheck("%NWBaldursGate_Helm&Cloak_L1%")
+     	AreaCheck("%NWBaldursGate_Tavern_L1%")
+     	AreaCheck("%SEBaldursGate_Inn_L1%")
+     	AreaCheck("%SEBaldursGate_Blade&Stars_L1%")
+     	AreaCheck("%SWBaldursGate_Tavern_L1%")
+     	AreaCheck("%SWBaldursGate_YeOldeInn_L1%")
+     	AreaCheck("%UlgothsBeard_Inn%")
+THEN
+  RESPONSE #100
+    PlaySong(0)
+    PlaySound("TIApril")
+    StartDialogNoSet(Player1)
+END
+
+
+//Chapter Talks
+
+// Maethor has talks for Chapter 2,3,4,5.
+
+//IF
+//InParty(Myself)
+//Global("TIMaethShutUp","GLOBAL",0)
+//See(Player1)
+//!StateCheck(Player1,CD_STATE_NOTVALID)
+//!StateCheck(Myself,CD_STATE_NOTVALID)
+//CombatCounter(0)
+//!See([ENEMY])
+//Global("Chapter","GLOBAL",2)            // that's the actual condition: Chapter=2. No dungeon check, since we're in Nashkel
+//Global("TIMaethChapter2","GLOBAL",0)
+//THEN
+//RESPONSE #100
+//SetGlobal("TIMaethChapter2","GLOBAL",1)
+//END
+
+//IF
+//InParty(Myself)
+//Global("TIMaethShutUp","GLOBAL",0)
+//See(Player1)
+//!StateCheck(Player1,CD_STATE_NOTVALID)
+//!StateCheck(Myself,CD_STATE_NOTVALID)
+//CombatCounter(0)
+//!See([ENEMY])
+//Global("Chapter","GLOBAL",3)           // No dungeon check, since we're in Larswood.
+//Global("TIMaethChapter3","GLOBAL",0)
+//THEN
+//RESPONSE #100
+//SetGlobal("TIMaethChapter3","GLOBAL",1)
+//END
+
+//IF
+//InParty(Myself)
+//Global("TIMaethShutUp","GLOBAL",0)
+//See(Player1)
+//!StateCheck(Player1,CD_STATE_NOTVALID)
+//!StateCheck(Myself,CD_STATE_NOTVALID)
+//CombatCounter(0)
+//!See([ENEMY])
+//Global("Chapter","GLOBAL",4)           // No dungeon check, since we're in Cloakwood
+//Global("TIMaethChapter4","GLOBAL",0)
+//THEN
+//RESPONSE #100
+//SetGlobal("TIMaethChapter4","GLOBAL",1)
+//END
+
+//IF
+//InParty(Myself)
+//Global("TIMaethShutUp","GLOBAL",0)
+//See(Player1)
+//!StateCheck(Player1,CD_STATE_NOTVALID)
+//!StateCheck(Myself,CD_STATE_NOTVALID)
+//CombatCounter(0)
+//!See([ENEMY])
+//Global("Chapter","GLOBAL",5)           // No dungeon check, since we're in Baldur's Gate
+//Global("TIMaethChapter5","GLOBAL",0)
+//THEN
+//RESPONSE #100
+//SetGlobal("TIMaethChapter5","GLOBAL",1)
+//END
+
+// So, if we're in Chapter 4, for example, then TIMaethChapter4=1 and a talk from TIMaethJ.d will run.
+// Again, music plays if Maethor is romanced, doesn't play otherwise.
+
+//IF
+//InParty(Myself)
+//Global("TIMaethShutUp","GLOBAL",0)
+//OR(2)
+//Global("TIMaethRomanceActive","GLOBAL",1)
+//Global("TIMaethRomanceActive","GLOBAL",2)
+//See(Player1)
+//!StateCheck(Player1,CD_STATE_NOTVALID)
+//!StateCheck(Myself,CD_STATE_NOTVALID)
+//CombatCounter(0)
+//!See([ENEMY])
+//OR(3)
+//Global("TIMaethChapter2","GLOBAL",1)
+//Global("TIMaethChapter3","GLOBAL",1)
+//Global("TIMaethChapter4","GLOBAL",1)
+//Global("TIMaethChapter5","GLOBAL",1)
+//THEN
+//RESPONSE #100
+//PlaySong(0)
+//PlaySound("TIApril")
+//StartDialogueNoSet(Player1)
+//END
+
+// Same block, non-romanced version(without music)
+//IF
+//InParty(Myself)
+//Global("TIMaethShutUp","GLOBAL",0)
+//OR(2)
+//Global("TIMaethFriendActive","GLOBAL",1)
+//!Global("TIMaethRomanceActive","GLOBAL",1)
+//!Global("TIMaethRomanceActive","GLOBAL",2)
+//See(Player1)
+//!StateCheck(Player1,CD_STATE_NOTVALID)
+//!StateCheck(Myself,CD_STATE_NOTVALID)
+//CombatCounter(0)
+//!See([ENEMY])
+//OR(3)
+//Global("TIMaethChapter2","GLOBAL",1)
+//Global("TIMaethChapter3","GLOBAL",1)
+//Global("TIMaethChapter4","GLOBAL",1)
+//Global("TIMaethChapter5","GLOBAL",1)
+//THEN
+//RESPONSE #100
+//StartDialogueNoSet(Player1)
+//END
+
+//Delayed LoveTalks
+
+//Delayed LT 1
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT1Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT1Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT1Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk1Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT1Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk1Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT1Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk1Retry","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      StartDialogNoSet(Player1)
+ END
+
+//Delayed LT 2
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT2Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT2Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT2Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk2Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT1Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk2Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT2Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk2Retry","GLOBAL",1)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      StartDialogNoSet(Player1)
+ END
+
+//Delayed LT 3
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT3Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT3Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT3Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk3Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT3Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk3Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT3Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk3Retry","GLOBAL",1)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      StartDialogNoSet(Player1)
+  END
+
+//Delayed LT 5
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT5Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT5Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT5Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk3Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    InParty(Myself)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT5Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk5Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT5Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk5Retry","GLOBAL",1)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      StartDialogNoSet(Player1)
+  END
+
+  /* Delayed LT 6 */
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT6Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT6Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT6Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk7Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT6Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk6Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT6Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk6Retry","GLOBAL",1)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      StartDialogNoSet(Player1)
+  END
+
+  /* Delayed LT 7 */
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT7Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT7Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT7Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk7Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT7Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk7Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT7Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk7Retry","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      StartDialogNoSet(Player1)
+  END
+
+  /* Delayed LT 10 */
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT10Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT10Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT10Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk10Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT10Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk10Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT10Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk3Retry","GLOBAL",1)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      StartDialogNoSet(Player1)
+  END
+
+  /* Delayed LT 11 */
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT11Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT11Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT11Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk11Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT11Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk11Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT11Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk11Retry","GLOBAL",1)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      StartDialogNoSet(Player1)
+  END
+
+/* Delayed LT 12 */
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT12Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT12Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT12Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk13Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT12Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk12Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT12Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk12Retry","GLOBAL",1)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      StartDialogNoSet(Player1)
+  END
+
+//Delayed LT 13
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT13Delay","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT13Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT13Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk13Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT13Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk13Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT13Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk13Retry","GLOBAL",1)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+     StartDialogNoSet(Player1)
+  END
+
+//Delayed LT 16
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT15Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT15Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT15Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk15Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT15Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk15Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT15Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk15Retry","GLOBAL",1)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      StartDialogNoSet(Player1)
+  END
+
+//Delayed LT 22
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT21Delay","GLOBAL",1)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT21Delay","GLOBAL",2)
+      RealSetGlobalTimer("TIMaethDelayLoveTalk","GLOBAL",600)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT21Delay","GLOBAL",2)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk21Retry","GLOBAL",0)
+    Global("TIMaethFriendMatch","GLOBAL",1)
+    Global("TIMaethRomanceMatch","GLOBAL",1)
+    !Global("TIMaethRomanceActive","GLOBAL",0)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    !Global("TIMaethFriendActive","GLOBAL",0)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+      SetGlobal("TIMaethLT21Delay","GLOBAL",3)
+      SetGlobal("TIMaethLovetalk21Retry","GLOBAL",1)
+  END
+
+  IF
+    InParty(Myself)
+    Global("TIMaethLT21Delay","GLOBAL",3)
+    RealGlobalTimerExpired("TIMaethDelayLoveTalk","GLOBAL")
+    Global("TIMaethLovetalk21Retry","GLOBAL",1)
+    !Global("TIMaethFriendActive","GLOBAL",3)
+    !Global("TIMaethRomanceActive","GLOBAL",3)
+    CombatCounter(0)
+    !See([ENEMY])
+  THEN
+    RESPONSE #100
+     StartDialogNoSet(Player1)
+  END
+
+/* What else are we missing? Romance!
+If Ajantis, Branwen, Coran, Dynaheir, Sharteel, or Xan love PC, Maethor will surrender. */
+
+IF
+!Global("P#CoranRomanceInactive","GLOBAL",1)
+OR(7)
+Global("X#AjantisRomanceActive","GLOBAL",2)
+Global("P#BranwenRomanceActive","GLOBAL",2)
+Global("X#DynaheirRomanceActive","GLOBAL",2)
+Global("B!GavinRomanceActive","GLOBAL",2)
+Global("SharteelRomanceActive","GLOBAL",2)
+Global("X#XARomanceActive","GLOBAL",2)
+Global("P#CORANLOVER","GLOBAL",2)
+Global("TIMaethRomanceActive","GLOBAL",1)
+!Global("TIMaethRomanceActive","GLOBAL",2)
+Global("TIMaethAnotherRomanceWon","GLOBAL",0)
+THEN
+RESPONSE #100
+SetGlobal("TIMaethRomanceActive","GLOBAL",3)
+SetGlobal("TIMaethAnotherRomanceWon","GLOBAL",1)
+END
+
+/* And if Maethor's romance is at 2, Ajantis, Branwen, Coran, Dynaheir, Sharteel, or Xan lose. */
+
+IF
+Global("TIMaethRomanceActive","GLOBAL",2)
+Global("X#AjantisRomanceActive","GLOBAL",1)
+Global("TIMaethAjantRomanceLost","GLOBAL",0)
+THEN
+RESPONSE #100
+SetGlobal("X#AjantisRomanceActive","GLOBAL",3)
+SetGlobal("TIMaethAjantRomanceLost","GLOBAL",1)
+END
+
+IF
+Global("TIMaethRomanceActive","GLOBAL",2)
+Global("P#BranwenRomanceActive","GLOBAL",1)
+Global("TIMaethBranRomanceLost","GLOBAL",0)
+THEN
+RESPONSE #100
+SetGlobal("P#BranwenRomanceActive","GLOBAL",3)
+SetGlobal("TIMaethBranRomanceLost","GLOBAL",1)
+END
+
+IF
+Global("TIMaethRomanceActive","GLOBAL",2)
+Global("P#CoranRomanceMatch","GLOBAL",1)
+Global("TIMaethCoraRomanceLost","GLOBAL",0)
+THEN
+RESPONSE #100
+SetGlobal("P#CoranRomanceInactive","GLOBAL",1)
+SetGlobal("TIMaethCoraRomanceLost","GLOBAL",1)
+END
+
+IF
+Global("TIMaethRomanceActive","GLOBAL",2)
+Global("X#DynaheirRomanceActive","GLOBAL",1)
+Global("TIMaethDynaRomanceLost","GLOBAL",0)
+THEN
+RESPONSE #100
+SetGlobal("X#DynaheirRomanceInactive","GLOBAL",1)
+SetGlobal("TIMaethDynaRomanceLost","GLOBAL",1)
+END
+
+IF
+Global("TIMaethRomanceActive","GLOBAL",2)
+Global("B!GavinRomanceActive","GLOBAL",1)
+Global("TIMaethGaviRomanceLost","GLOBAL",0)
+THEN
+RESPONSE #100
+SetGlobal("B!GavinRomanceActive","GLOBAL",3)
+SetGlobal("TIMaethGaviRomanceLost","GLOBAL",1)
+END
+
+IF
+Global("TIMaethRomanceActive","GLOBAL",2)
+Global("SharteelRomanceActive","GLOBAL",1)
+Global("TTIMaethSharteelRomanceLost","GLOBAL",0)
+THEN
+RESPONSE #100
+SetGlobal("SharteelRomanceActive","GLOBAL",3)
+SetGlobal("TIMaethSharteelRomanceLost","GLOBAL",1)
+END
+
+IF
+Global("TIMaethRomanceActive","GLOBAL",2)
+Global("X#XARomanceActive","GLOBAL",1)
+Global("TIMaethXanRomanceLost","GLOBAL",0)
+THEN
+RESPONSE #100
+SetGlobal("X#XARomanceInActive","GLOBAL",1)
+SetGlobal("TIMaethXanRomanceLost","GLOBAL",1)
+END
+
+/* Flirts initiate... */
+
+IF
+InParty(Myself)
+Global("TIMaethShutUp","GLOBAL",0)
+//GlobalGT("TIMaethTalk","GLOBAL",6)
+OR(2)
+Global("TIMaethRomanceActive","GLOBAL",1)
+Global("TIMaethRomanceActive","GLOBAL",2)
+Global("TIMaethFlirtsStart","GLOBAL",0)
+THEN
+RESPONSE #100
+SetGlobal("TIMaethFlirtsStart","GLOBAL",1)
+RealSetGlobalTimer("TIMaethFlirtTimer","GLOBAL",300)
+END
+
+/* Ready for flirting! */
+
+IF
+InParty(Myself)
+RealGlobalTimerExpired("TIMaethFlirtTimer","GLOBAL")
+Global("TIMaethShutUp","GLOBAL",0)
+!StateCheck(Myself,CD_STATE_NOTVALID)
+!StateCheck(Player1,CD_STATE_NOTVALID)
+OR(2)
+Global("TIMaethRomanceActive","GLOBAL",1)
+Global("TIMaethRomanceActive","GLOBAL",2)
+See(Player1)
+CombatCounter(0)
+!See([ENEMY])
+Global("TIMaethFlirt","GLOBAL",0)
+THEN
+RESPONSE #100
+SetGlobal("TIMaethFlirt","GLOBAL",1)
+END
+
+/* Flirting begins! */
+
+IF
+InParty(Myself)
+Global("TIMaethFlirt","GLOBAL",1)
+!StateCheck(Myself,CD_STATE_NOTVALID)
+!StateCheck(Player1,CD_STATE_NOTVALID)
+See(Player1)
+THEN
+RESPONSE #100
+StartDialogueNoSet(Player1)
+END

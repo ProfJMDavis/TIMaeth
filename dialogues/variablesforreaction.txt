@@ -1,0 +1,24 @@
++ ~Global("RE1_BardolanSex","GLOBAL",1)~ + ~Like Bardolan?~ DO ~SetGlobal("TIBardo","GLOBAL",1)~ + 170.5
++ ~Global("RE1_ScarSex","GLOBAL",1)~ + ~Like Scar?~ DO ~SetGlobal("TIScar","GLOBAL",1)~ + 170.5
++ ~Global("RE1_KimSex","GLOBAL",1)~ + ~Like Kim?~ DO ~SetGlobal("TIKim","GLOBAL",1)~ + 170.5
++ ~Global("RE1_HusamSex","GLOBAL",1)~ + ~Like Husam?~ DO ~SetGlobal("TIHusam","GLOBAL",1)~ + 170.5
++ ~Global("RE1_LaurelSex","GLOBAL",1)~ + ~Like Laurel?~ DO ~SetGlobal("TILaurel","GLOBAL",1)~ + 170.5
++ ~Global("RE1_BartusSex","GLOBAL",1)~ + ~Like Bartus?~ DO ~SetGlobal("TIBartus","GLOBAL",1)~ + 170.5
++ ~Global("RE1_QuentinSex","GLOBAL",1)~ + ~Like Quentin?~ DO ~SetGlobal("TIQuentin","GLOBAL",1)~ + 170.5
++ ~Global("RE1_LinaSex","GLOBAL",1)~ + ~Like Lina?~ DO ~SetGlobal("TILina","GLOBAL",1)~ + 170.5
++ ~Global("RE1_NiklosSex","GLOBAL",1)~ + ~Like Niklos?~ DO ~SetGlobal("TINiklos","GLOBAL",1)~ + 170.5
++ ~Global("RE1_SlytheKrystinSex","GLOBAL",1)~ + ~Like Krystin?~ DO ~SetGlobal("TIKrystin","GLOBAL",1)~ + 170.5
++ ~Global("RE1_HarlotSex","GLOBAL",1)~ + ~Like those harlots?~ DO ~SetGlobal("TIHarlot","GLOBAL",1)~ + 170.5
++ ~Global("RE1_MelicampSex","GLOBAL",1)~ + ~Like Melicamp?~ DO ~SetGlobal("TIMeli","GLOBAL",1)~ + 170.5
++ ~Global("RE1_SchvantzSex","GLOBAL",1)~ + ~Like Schvantz?~ DO ~SetGlobal("TISchvantz","GLOBAL",1)~ + 170.5
++ ~Global("RE1_ArianeSex","GLOBAL",1)~ + ~Like Ariane?~ DO ~SetGlobal("TIAriane","GLOBAL",1)~ + 170.5
++ ~Global("RE1_RinnieSex","GLOBAL",1)~ + ~Like Rinne?~ DO ~SetGlobal("TIRinnie","GLOBAL",1)~ + 170.5
++ ~Global("RE1_EnderSex","GLOBAL",1)~ + ~Like Ender?~ DO ~SetGlobal("TIEnder","GLOBAL",1)~ + 170.5
++ ~Global("RE1_SurgeonSex","GLOBAL",1)~ + ~Like the Surgeon?~ DO ~SetGlobal("TISurgeon","GLOBAL",1)~ + 170.5
++ ~Global("RE1_LeftSex","GLOBAL",1)~ + ~Like Left?~ DO ~SetGlobal("TILeft","GLOBAL",1)~ + 170.5
++ ~Global("RE1_ArleneSex","GLOBAL",1)~ + ~Like Arlene?~ DO ~SetGlobal("TIArlene","GLOBAL",1)~ + 170.5
++ ~Global("RE1_DellaSex","GLOBAL",1)~ + ~Like Della?~ DO ~SetGlobal("TIDella","GLOBAL",1)~ + 170.5
++ ~Global("RE1_PhoenixSex","GLOBAL",1)~ + ~Like that... uhh... Phoenix Guard spirit-thing?~ DO ~SetGlobal("TIPhoenix","GLOBAL",1)~ + 170.5
++ ~GlobalGT("TICherSex","GLOBAL",0)~ + ~Like my teacher Cherilane?~ DO ~SetGlobal("TICher","GLOBAL",1)~ + 170.5
++ ~Global("RE1_MikalaSex","GLOBAL",1)~ + ~Like Mikala?~ DO ~SetGlobal("TIMikala","GLOBAL",1)~ + 170.5
++ ~Global("TIMaethorSex","GLOBAL",1)~ + ~Do you mean other than you?~ DO ~SetGlobal("TIMaethor","GLOBAL",1)~ + 170.5

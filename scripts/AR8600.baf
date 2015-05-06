@@ -1,0 +1,10 @@
+IF %BGT_VAR%
+Global("TITybalt","GLOBAL",2)
+!Dead("TITybalt")
+!Exists("TITybalt")
+
+THEN
+RESPONSE #100
+SetGlobal("TITybalt","GLOBAL",3)
+CreateCreature("TITybalI",[1792,1898]%FACE_0%)
+END

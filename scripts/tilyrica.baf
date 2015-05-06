@@ -1,0 +1,344 @@
+// ------------------------------
+// Friendship start
+// ------------------------------
+
+IF
+    InParty(Myself)
+    !Dead("TILyr")
+    Global("TILyrFriendship","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TILyrFriendship","GLOBAL",1)
+END
+
+// Check if Mulahey is dead
+IF
+    InParty(Myself)
+    !Dead("TILyr")
+    Dead("mulahey")
+    Global("TILyrMulaheyAlreadyDead","GLOBAL",0)
+    Global("TILyrMulaheyCheck","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TILyrMulaheyAlreadyDead","GLOBAL",1)
+    SetGlobal("TILyrMulaheyCheck","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    !Dead("TILyr")
+    !Dead("mulahey")
+    Global("TILyrMulaheyCheck","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TILyrMulaheyCheck","GLOBAL",1)
+END
+
+// Start friendship
+IF
+    InParty(Myself)
+    !Dead("TILyr")
+    Global("TILyrMulaheyAlreadyDead","GLOBAL",0)
+    Global("TILyrFriendTalk","GLOBAL",0)
+    Dead("mulahey")
+    AreaType([OUTDOOR])
+    !Global("TILyrFriendship","GLOBAL",3)
+THEN
+  RESPONSE #100
+    SetGlobal("TILyrFriendTalk","GLOBAL",1)
+    RealSetGlobalTimer("TILyrFriendTalkTimer","GLOBAL",10)
+END
+
+IF
+    InParty(Myself)
+    !Dead("TILyr")
+    Dead("mulahey")
+    Global("TILyrMulaheyAlreadyDead","GLOBAL",1)
+    Global("TILyrFriendTalk","GLOBAL",0)
+    !Global("TILyrFriendship","GLOBAL",3)
+THEN
+  RESPONSE #100
+    SetGlobal("TILyrFriendTalk","GLOBAL",3)
+    RealSetGlobalTimer("TILyrFriendTalkTimer","GLOBAL",2700)
+END
+
+
+// Triggering talks
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    RealGlobalTimerExpired("TILyrFriendTalkTimer","GLOBAL")
+    CombatCounter(0)
+    !See([ENEMY])
+    !Global("TILyrFriendship","GLOBAL",3)
+    OR(14)
+      Global("TILyrFriendTalk","GLOBAL",2)
+      Global("TILyrFriendTalk","GLOBAL",6)
+      Global("TILyrFriendTalk","GLOBAL",8)
+      Global("TILyrFriendTalk","GLOBAL",10)
+      Global("TILyrFriendTalk","GLOBAL",12)
+      Global("TILyrFriendTalk","GLOBAL",14)
+      Global("TILyrFriendTalk","GLOBAL",16)
+      Global("TILyrFriendTalk","GLOBAL",18)
+      Global("TILyrFriendTalk","GLOBAL",20)
+      Global("TILyrFriendTalk","GLOBAL",24)
+      Global("TILyrFriendTalk","GLOBAL",28)
+      Global("TILyrFriendTalk","GLOBAL",30)
+      Global("TILyrFriendTalk","GLOBAL",32)
+      Global("TILyrFriendTalk","GLOBAL",34)
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+    Dialogue(Player1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    RealGlobalTimerExpired("TILyrFriendTalkTimer","GLOBAL")
+    !Global("TILyrFriendship","GLOBAL",3)
+    OR(11)
+      Global("TILyrFriendTalk","GLOBAL",1)
+      Global("TILyrFriendTalk","GLOBAL",5)
+      Global("TILyrFriendTalk","GLOBAL",7)
+      Global("TILyrFriendTalk","GLOBAL",9)
+      Global("TILyrFriendTalk","GLOBAL",13)
+      Global("TILyrFriendTalk","GLOBAL",15)
+      Global("TILyrFriendTalk","GLOBAL",17)
+      Global("TILyrFriendTalk","GLOBAL",23)
+      Global("TILyrFriendTalk","GLOBAL",27)
+      Global("TILyrFriendTalk","GLOBAL",31)
+      Global("TILyrFriendTalk","GLOBAL",33)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TILyrFriendTalk","GLOBAL",1)
+END
+
+
+// FT 6: after bandit camp
+IF
+    InParty(Myself)
+    !Dead("TILyr")
+    GlobalGT("Chapter","GLOBAL",%tutu_chapter_3%)
+    Global("TILyrFriendTalk","GLOBAL",11)
+    !Global("TILyrFriendship","GLOBAL",3)
+    Global("TILyrBandits","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TILyrBandits","GLOBAL",1)
+    RealSetGlobalTimer("TILyrFriendTalkTimer","GLOBAL",2700)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    RealGlobalTimerExpired("TILyrFriendTalkTimer","GLOBAL")
+    CombatCounter(0)
+    !See([ENEMY])
+    !Global("TILyrFriendship","GLOBAL",3)
+    Global("TILyrFriendTalk","GLOBAL",11)
+    Global("TILyrBandits","GLOBAL",1)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TILyrFriendTalk","GLOBAL",1)
+END
+
+// FT 10: After clearing cloakwood
+IF
+    InParty(Myself)
+    !Dead("TILyr")
+    GlobalGT("Chapter","GLOBAL",%tutu_chapter_4%)
+    Global("TILyrFriendTalk","GLOBAL",19)
+    !Global("TILyrFriendship","GLOBAL",3)
+    Global("TILyrCloakwood","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TILyrCloakwood","GLOBAL",1)
+    RealSetGlobalTimer("TILyrFriendTalkTimer","GLOBAL",2700)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    RealGlobalTimerExpired("TILyrFriendTalkTimer","GLOBAL")
+    CombatCounter(0)
+    !See([ENEMY])
+    !Global("TILyrFriendship","GLOBAL",3)
+    Global("TILyrFriendTalk","GLOBAL",19)
+    Global("TILyrCloakwood","GLOBAL",1)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TILyrFriendTalk","GLOBAL",1)
+END
+
+// FT 15
+IF
+    InParty(Myself)
+    !Dead("TILyr")
+    Global("TILyrFriendTalk","GLOBAL",29)
+    !Global("TILyrFriendship","GLOBAL",3)
+    GlobalGT("Chapter","GLOBAL",%tutu_chapter_6%)
+    Global("TILyrCandlekeep","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TILyrCandlekeep","GLOBAL",1)
+    RealSetGlobalTimer("TILyrFriendTalkTimer","GLOBAL",600)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    RealGlobalTimerExpired("TILyrFriendTalkTimer","GLOBAL")
+    CombatCounter(0)
+    !See([ENEMY])
+    !Global("TILyrFriendship","GLOBAL",3)
+    Global("TILyrFriendTalk","GLOBAL",29)
+    Global("TILyrCandlekeep","GLOBAL",1)
+THEN
+  RESPONSE #100
+    IncrementGlobal("TILyrFriendTalk","GLOBAL",1)
+END
+
+
+
+//Area: %Temple_SongoftheMorning%
+IF 
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TILyr_temple","GLOBAL",0)
+    AreaCheck("%Temple_SongoftheMorning%")
+THEN
+  RESPONSE #100
+    SetGlobal("TILyr_temple","GLOBAL",1)
+END
+
+//Area: %NashkelMines_L1%
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TILyr_mines","GLOBAL",0)
+    AreaCheck("%NashkelMines_L1%")
+THEN
+  RESPONSE #100
+    SetGlobal("TILyr_mines","GLOBAL",1)
+END
+
+//Area %ValleyoftheTombs_Tomb%
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TILyr_Valley","GLOBAL",0)
+    AreaCheck("%ValleyoftheTombs_Tomb%")
+THEN
+  RESPONSE #100
+    SetGlobal("TILyr_Valley","GLOBAL",1)
+END
+
+//Area %CloakwoodMines_L4% sub area: shrine to Bhaal (room NW of bedroom adjacent to elevator)
+/*
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TILyr_bhaal","GLOBAL",1)
+    AreaCheck("%CloakwoodMines_L4%")
+THEN
+  RESPONSE #100
+    SetGlobal("TILyr_bhaal","GLOBAL",2)
+END  */
+
+//(If you flood the mine without freeing the slaves)
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TILyr_flood","GLOBAL",0)
+    !Global("FREESLAV","GLOBAL",1)
+    GlobalGT("FLOODED","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TILyr_flood","GLOBAL",1)
+END
+
+//Area %Candlekeep_Library_L1%
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TILyr_candlekeep","GLOBAL",0)
+    AreaCheck("%Candlekeep_Library_L1%")
+THEN
+  RESPONSE #100
+    SetGlobal("TILyr_candlekeep","GLOBAL",1)
+END
+
+//(When Charname finds Gorion's letter - Shadowkeeper gave me an error when looking up the item code, and Tutu triggers a dialogue when you pick up the letter, and only if Global("TILyrFriendship","GLOBAL",1))
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TILyr_letter","GLOBAL",0)
+    Global("TILyrFriendship","GLOBAL",1)
+    PartyHasItem("%tutu_var%SCRL2J")
+THEN
+  RESPONSE #100
+    SetGlobal("TILyr_letter","GLOBAL",1)
+END
+
+//In inventory: POTN48.itm
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TILyr_potion","GLOBAL",0)
+    PartyHasItem("POTN48")
+THEN
+  RESPONSE #100
+    SetGlobal("TILyr_potion","GLOBAL",1)
+END
+
+//In inventory: BOOK03.itm, BOOK04.itm, BOOK05.itm, BOOK06.itm BOOK07.itm, or BOOK08.itm. Should only fire once regardless of which book you put in.
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TILyr_book","GLOBAL",0)
+    OR(6)
+      PartyHasItem("BOOK03")
+      PartyHasItem("BOOK04")
+      PartyHasItem("BOOK05")
+      PartyHasItem("BOOK06")
+      PartyHasItem("BOOK07")
+      PartyHasItem("BOOK08")
+THEN
+  RESPONSE #100
+    SetGlobal("TILyr_book","GLOBAL",1)
+END
+
+
+// Triggering talks
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    OR(9)
+      Global("TILyr_temple","GLOBAL",1)
+      Global("TILyr_mines","GLOBAL",1)
+      Global("TILyr_Lyrley","GLOBAL",1)
+      Global("TILyr_bhaal","GLOBAL",2)
+      Global("TILyr_flood","GLOBAL",1)
+      Global("TILyr_candlekeep","GLOBAL",1)
+      Global("TILyr_letter","GLOBAL",1)
+      Global("TILyr_potion","GLOBAL",1)
+      Global("TILyr_book","GLOBAL",1)
+THEN
+  RESPONSE #100
+    MoveToObject(Player1)
+    Dialogue(Player1)
+END
+

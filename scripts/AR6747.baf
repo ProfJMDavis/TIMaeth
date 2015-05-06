@@ -1,0 +1,10 @@
+IF %BGT_VAR%
+Global("TILiriaExists","AR6747",0)
+!Dead("TILiria")
+!Exists("TILiria")
+
+THEN
+RESPONSE #100
+SetGlobal("TILiriaExists","AR6747",1)
+CreateCreature("TILiria",[389.263]%FACE_3%)
+END

@@ -1,0 +1,250 @@
+//Beginning Info:
+BACKUP ~TIMaeth/Backup~
+AUTHOR ~Tibicina~
+VERSION ~1.0~
+README ~TIMaeth/TIMaeth_Readme.txt~
+
+//Component: Blade of Sahandrian Kit (Maethor)
+BEGIN ~Blade of Sahandrian Kit~
+ADD_KIT ~TIBlade~
+// appended to CLASWEAP.2da
+~TIBlade                 1           1           1           1           1           1           1           1~
+// appended column-wise to WEAPPROF.2da
+~TIBlade     3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  3  2  2  2  3  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 ~
+// appended to ABCLASRQ.2da
+~TIBlade                 10       3       12      3       16      17~
+// appended to ABCLSMOD.2da
+~TIBlade                 0        1      -1       0       0       0~
+// appended to ABDCDSRQ.2da
+~TIBlade                 0        0       0       0       0       0~
+// appended to ABDCSCRQ.2da
+~TIBlade                 0        0       0       0       15      0~
+// appended to ALIGNMNT.2da
+~TIBlade                 0        0       0       0       0       0      1       0       0~
+// appended to DUALCLAS.2da
+~TIBlade                 0        0       0       0       0       0~
+
+// path to your CLAB-style 2da file
+~TIMaeth/kits/TICLABP2.2da~
+
+// PC races and classes allowed to use this kit, from KITTABLE.2da
+~~
+// usability flags, added to the end of the KITLIST.2da entry
+~0x00000001  6~
+
+// HLA table to use; see LUABBR.2da
+~Pa0~
+
+// list of starting equipment for PCs starting in ToB. Appended column-wise to 25STWEAP.2da
+~ ELFPLT1 NEWSM01  HELM07  BAG26  RING07  RING31  *  BOOT04  AMUL20  BRAC10  BELT06  AROW11  BULL03  BOLT06  POTN52  POTN04  POTN14 BOW04  *  SW1H74~
+
+// Lower, mixed, and help kit names and descriptions, added to KITLIST.2da
+SAY ~Blade of Sahandrian~
+SAY ~Blade of Sahandrian~
+SAY ~Blade of Sahandrian: Corellon's paladins, the Blade of Sahandrian, desire to protect and preserve the elven race, return to the elves their lost artistic heritage, and to thwart the schemes of the drow and the orcs. This also means guarding against corruption within and against stagnation as well, continually seeking out new experiences. They seek to bring out beauty through art, craft, and magic.~
+
+COPY ~TIMaeth/spells/A#FEY0A.spl~ ~override~
+SAY NAME1 ~Immunity to Death Magic~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~The Blades of Sahandrian are granted immunity to death magic by their deity, Corellon Larethian.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/A#FEY0B.spl~ ~override~
+SAY NAME1 ~Longsword - 'Sahandrian'~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~Sahandrian is the spiritual weapon of the Blades of Sahandrian, and is wielded as if the caster had grand mastery in the weapon. Sahandrian is a regular weapon at levels 1-5, +1 at levels 6-10, +2 at 11-15, +3 at 16-20, +4 at 21-25, and +5 at levels 26 and above. The spiritual weapon lasts for one round per level of the caster, up to 20 rounds..~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/A#FEY07.spl~ ~override~
+SAY NAME1 ~Enchanted Weapon~ // unidentified name for items OR spell name
+SAY NAME2 ~Unidentified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell conjures forth a +3 enchanted weapon that can be given to anyone. The weapon may be of any type, or the caster may alternatively decide to conjure 40 magical arrows, bolts, or bullets. The weapon stays in existence for no longer than a day.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/A#FEY09.spl~ ~override~
+SAY NAME1 ~Spell Immunity~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~Casting this spell grants the caster protection from one spell school of her choice. After the spell is cast, the wizard must choose the school she wishes to be protected from. All spells of this school will be unable to harm or aid the caster for the duration of this spell. This includes priest spells of the appropriate school that might benefit the caster.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/A#FEY11.spl~ ~override~
+SAY NAME1 ~Protection from Magical Weapons~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When the spell is cast it confers complete invulnerability to all magical weapons.  This includes weapons that are blessed or enchanted. The attacks of powerful monsters are also considered magical weapons.  This spell cannot be cast on anyone who is protected from normal weapons, nor on anyone protected by mantle, improved mantle, or absolute immunity.  Due to the nature of this spell, with the short speed factor and duration, it is mainly used to buy the caster a few rounds in the thick of combat.  This effect lasts for the duration of the spell or until dispelled.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/CDLV1NA.spl~ ~override~
+SAY NAME1 ~Know Alignment~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~A know alignment spell enables the mage to exactly read the aura of a creature.  If the creature rolls a successful saving throw vs. spell, the caster learns nothing about that particular creature from the casting.  When a character is hit by this spell, he will glow red if he's evil, green if he's good, and white if he's neutral.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/CDDTGOOD.spl~ ~override~
+SAY NAME1 ~Detect Good~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell discovers emanations of good from any creature. Any good creature within the range of the spell will glow green briefly.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/CDEVL10.spl~ ~override~
+SAY NAME1 ~Protect from Evil 10ft Radius~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When this spell is cast, all creatures within a 10' radius are affected individually by 'protection from evil'.  It creates a magical barrier around the recipients at a distance of one foot. The barrier moves with the recipient and has two major effects: First, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of - 2 to each attack roll, and second, any saving throws caused by such attacks are made by the protected creature with a +2 bonus.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/CDNEGPP.spl~ ~override~
+SAY NAME1 ~Negative Plane Protection~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell affords the recipient partial protection from monsters with Negative Energy plane connections (such as vampires) and certain weapons and spells that drain energy levels. The Negative Plane Protection spell opens a channel to the Positive Energy plane, largely negating the effects of a negative energy attack. A protected creature struck by a negative energy attack is protected against any form of level draining for the duration of the spell, though they will still suffer normal hit point damage from level draining attacks, if applicable. This spell cannot be cast on the Negative Energy plane.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/EISPCL15.spl~ ~override~
+SAY NAME1 ~Smite Evil~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~With the Smite ability, the caster gains the ability to strike a mighty blow, knocking an opponent back for a considerable distance and stunning the opponent for 1 round. All attacks made in the first round are critical hits. The ability lasts for 2 rounds.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/NMCUREBD.spl~ ~override~
+SAY NAME1 ~Cure Blindness or Deafness~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~By touching the creature afflicted, the caster employing the spell can permanently cure some forms of blindness or deafness.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/PELF004.spl~ ~override~
+SAY NAME1 ~Elven Privilege~ // unidentified name for items OR spell name
+SAY NAME2 ~Unidentified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This is the special ability that Corellon gives to His elven paladins. No other class has access to this spell, that gives these temporary bonuses: +1 to all saves, +1 Thac0, +1/2 attack per round, +50% resistance to physical damage, +4 AC and immunity to level drain.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/RR#PALCD.spl~ ~override~
+SAY NAME1 ~Cure Disease~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~By laying her hands upon a sickly person, the caster can cure almost any disease with this spell.  The cure is permanent, but this does not grant the recipient of the spell immunity from further afflictions.  Feeblemind is also cured with this spell.  Some magically created diseases may not be curable by this spell.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/rr#paldi.spl~ ~override~
+SAY NAME1 ~Disease Immunity~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~Paladins, by virtue of their calling, are granted immunity to disease.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/RR#WSIC.spl~ ~override~
+SAY NAME1 ~Aura of Courage~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~A Paladin of the appropriate level is immune to fear (magical or otherwise). Each ally within 10 feet of the paladin gains a +4 morale bonus on saving throws against fear effects for 9 seconds. This ability functions while the paladin is conscious, but not if she is unconscious or dead.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPCL212.spl~ ~override~
+SAY NAME1 ~Detect Evil~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell discovers emanations of evil from any creature. Any evil creature within the range of the spell will glow red briefly.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPCL213.spl~ ~override~
+SAY NAME1 ~Protection from Evil~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When this spell is cast, it creates a magical barrier around the recipient at a distance of one foot. The barrier moves with the recipient and has two major effects: First, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of - 2 to each attack roll, and second, any saving throws caused by such attacks are made by the protected creature with a +2 bonus.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPCL221.spl~ ~override~
+SAY NAME1 ~Charm Immunity~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~Blades of Sahandrian are granted enhanced strength of will by their chosen deity, granting immunity to charm-based magic. ~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPIN109.spl~ ~override~
+SAY NAME1 ~Lay On Hands~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When casting this spell, and laying his hand upon a creature, the Paladin causes 8 points of wound or other injury damage to the creature's body to be healed. This healing cannot affect creatures without corporeal bodies, nor can it cure wounds of creatures not living or of extraplanar origin. Curing is permanent only insofar as the creature does not sustain further damage; caused wounds will heal - or can be cured - just as any normal injury.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR103.spl~ ~override~
+SAY NAME1 ~Cure Light Wounds~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When casting this spell, and laying his hand upon a creature, the caster causes wounds and other injuries to the creature's body to be healed. The priest can restore 1d8 + 1/level points of damage sustained by the target creature (up to a maximum of 1d8+5). This healing cannot affect creatures without corporeal bodies, nor can it cure wounds of creatures not living or of extraplanar origin.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR109.spl~ ~override~
+SAY NAME1 ~Sanctuary~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When the caster casts a Sanctuary spell, it causes all of his opponents to ignore the targets' existence as if he were invisible.  While protected by this spell, the subject cannot take direct offensive action without breaking the spell, but may use non-attack spells or otherwise act in any way that does not violate the prohibition against offensive action. Note that this spell does not prevent the operation of area attacks (such as fireball or curse).  This allows a warded priest to heal wounds, for example, or to bless himself.  He cannot cast spells on other creatures without ending the spell. ~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR111.spl~ ~override~
+SAY NAME1 ~Armor of Faith~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~The caster of the Armor of Faith receives significant protection against melee and missile attacks. This magical armor is a force of energy that absorbs a portion of the damage intended for the caster, effectively reducing the damage sustained by 20%. Multiple castings of this spell are not cumulative.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR177.spl~ ~override~
+SAY NAME1 ~Change Appearance~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When casting this spell, the caster causes their appearance to change~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR178.spl~ ~override~
+SAY NAME1 ~Revert Appearance~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When casting this spell, the caster causes their appearance to revert to their original description.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR209.spl~ ~override~
+SAY NAME1 ~Know Opponent~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When this spell is cast, the caster's eyes glow with magical energy, enabling him to read the aura of a creature, and determine the creature's strengths and weaknesses. For the duration of the spell, the target's physical resistances are lowered by 10% and all attacks against the target creature are made with a +2 bonus to the attack roll. Certain magical devices negate the power of the Know Opponent spell, and the spell has no effect on creatures who don't emanate auras, such as constructs. Magic resistance does not affect this spell.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR210.spl~ ~override~
+SAY NAME1 ~Resist Fire and Cold~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When this spell is cast upon a creature, the creature's body is toughened to withstand heat and cold. The recipient can somewhat resist intense heat or cold (whether natural or magical in origin), such as red-hot charcoal, a large amount of burning oil, flaming swords, fireballs, burning hands, or wands of frost. In all of these cases, the temperature affects the creature to some extent. The recipient has all damage sustained by fire or cold reduced by 50%. Multiple castings of this spell are not cumulative.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR308.spl~ ~override~
+SAY NAME1 ~Remove Paralysis~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~By the use of this spell, the caster can free several creatures from the effects of any paralyzation or related magic (such as a ghoul's touch, Hold spell, or Power Word Stun).~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR315.spl~ ~override~
+SAY NAME1 ~Cure Serious Wounds~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When casting this spell, and laying his hand upon a creature, the caster causes wounds and other injuries to the creature's body to be healed. The priest can restore 3d8 + 1/level points of damage sustained by the target creature (up to a maximum of 3d8+15). This healing cannot affect creatures without corporeal bodies, nor can it cure wounds of creatures not living or of extraplanar origin.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR320.spl~ ~override~
+SAY NAME1 ~Repulse Undead~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell creates waves of positive energy that sweep outwards from the caster. This wave disrupts any undead that attempt to attack the caster, pushing them away from the caster for several seconds. There is one wave each round for the duration of the spell. All undead are affected, without a saving throw.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR401.spl~ ~override~
+SAY NAME1 ~Heal Critical Wounds~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When casting this spell, and laying his hand upon a creature, the caster causes wounds and other injuries to the creature's body to be healed. The priest can restore 4d8 + 1/level points of damage sustained by the target creature (up to a maximum of 4d8+20). This healing cannot affect creatures without corporeal bodies, nor can it cure wounds of creatures not living or of extraplanar origin.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR404.spl~ ~override~
+SAY NAME1 ~Neutralize Poison~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell removes all toxins from the body, both natural and magical in nature. When this spell is cast upon a poisoned individual, it immediately neutralizes any poison. In addition, for the duration of the spell, the recipient is immune to any poison it is exposed to, and spells like Poison and Cloudkill won't affect the protected creature.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR415.spl~ ~override~
+SAY NAME1 ~Farsight~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When Farsight is cast, the caster is able to view an area of an unexplored map. After casting the spell, simply click on a section of the map that you want to view. For the duration of the spell, the caster can spy on that area, noting creatures and fortifications.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/SPPR515.spl~ ~override~
+SAY NAME1 ~Undead Ward~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~When an undead creature attempts to enter the protected area, the creature is affected by the ward as if it were being turned by a priest the same level as the caster (up to level 20).  The casting Priest need not have the ability to turn undead himself. The results of the turning attempt are calculated normally.  If a large number of undead assult the warded area, not all of them are turned by the spell, since normal limitations apply.  Undead who are unaffected by the turning attempt ignore the undead ward for its duration.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/spells/TIAUART.spl~ ~override~
+SAY NAME1 ~Augment Artistry~ // unidentified name for items OR spell name
+SAY NAME2 ~Identified Name~ // identified name for items; not used for spells
+SAY UNIDENTIFIED_DESC ~This spell combines magic with the act of creation to enhance the artistry of any work created by the recipient of this spell. In addition to the nonweapon proficiency artistic ability, this spell usually augments a proficiency check for dancing, gem cutting, singing, or any other skill that is traditionally considered an artistic endeavor.~ // unidentified description for items, spell description for spells
+SAY DESC ~Identified Description~ // identified description for items, unused for spells
+
+COPY ~TIMaeth/bams/TIAUART.bam~ ~override~

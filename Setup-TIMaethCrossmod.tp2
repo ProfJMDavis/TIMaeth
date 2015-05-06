@@ -1,0 +1,43 @@
+//Beginning Info:
+BACKUP ~TIMaeth/Backup~
+AUTHOR ~Tibicina~
+VERSION ~1.0~
+README ~TIMaeth/TIMaeth_Readme.txt~
+
+//Component: Crossmod Dialogue
+BEGIN ~Install Isra-Maethor crossmod banter?~
+  REQUIRE_COMPONENT ~setup-timaeth.tp2~ ~0~ ~You do not appear to have Maethor installed~
+  REQUIRE_COMPONENT ~setup-Isra.tp2~ ~0~ ~You do not appear to have Isra installed~
+
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/maethor-isra_crossmod.d~
+
+BEGIN ~Install White-Maethor crossmod banter?~
+  REQUIRE_COMPONENT ~setup-timaeth.tp2~ ~0~ ~You do not appear to have Maethor installed~
+  REQUIRE_COMPONENT ~White.tp2~ ~0~ ~You do not appear to have White installed~
+
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/maethor-white_crossmod.d~
+
+BEGIN ~Install White-Maethor crossmod banter?~
+  REQUIRE_COMPONENT ~setup-timaeth.tp2~ ~0~ ~You do not appear to have Maethor installed~
+  REQUIRE_COMPONENT ~setup-bgqe.tp2~ ~0~ ~You do not appear to have White installed~
+
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/maethor-slimequest_crossmod.d~
+
+BEGIN ~Install Valerie-Maethor crossmod banter?~
+  REQUIRE_COMPONENT ~setup-timaeth.tp2~ ~0~ ~You do not appear to have Maethor installed~
+  REQUIRE_COMPONENT ~valerie.tp2~ ~0~ ~You do not appear to have Valerie installed~
+
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/maethor-valerie_crossmod.d~
+
+BEGIN ~Install Vynd-Maethor crossmod banter?~
+  REQUIRE_COMPONENT ~setup-timaeth.tp2~ ~0~ ~You do not appear to have Maethor installed~
+  REQUIRE_COMPONENT ~setup-vynd.tp2~ ~0~ ~You do not appear to have Vynd installed~
+
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/maethor-vynd_crossmod.d~
+
+BEGIN ~Install Gavin-Maethor crossmod banter?~
+  REQUIRE_COMPONENT ~setup-timaeth.tp2~ ~0~ ~You do not appear to have Maethor installed~
+  REQUIRE_COMPONENT ~gavin.tp2~ ~0~ ~You do not appear to have Gavin installed~
+
+COMPILE EVALUATE_BUFFER ~TIMaeth/dialogues/maethor-gavin_crossmod.d~
+EXTEND_BOTTOM ~b!gavin.bcs~ ~TIMaeth/scripts/gavin.baf~

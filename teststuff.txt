@@ -1,0 +1,216 @@
+// Activate attacking Drizzt: Maethor turns hostile //
+IF
+AreaCheck("%FishermansLake%")
+Global("X#PartyAttackedDrizzt","GLOBAL",1)
+InParty(Myself) //No "Combatcounter=0" here!
+Global("TIMaethorDrizztHostile","GLOBAL",0)
+Global("TIMaethorDrizzt3","GLOBAL",0)//auto-set from other Ajantis interjection
+InParty(Myself)
+!StateCheck(Myself,CD_STATE_NOTVALID)
+InMyArea(Player1)
+!StateCheck(Player1,CD_STATE_NOTVALID)
+THEN
+RESPONSE #100
+SetGlobal("TIMaethorDrizztHostile","GLOBAL",1)
+END
+
+// Initiate attacking Drizzt: Maethor turns hostile //
+IF
+Global("TIMaethorDrizztHostile","GLOBAL",1)
+InParty(Myself) //No "Combatcounter=0" here!
+!StateCheck(Myself,CD_STATE_NOTVALID)
+InMyArea(Player1)
+!StateCheck(Player1,CD_STATE_NOTVALID)
+THEN
+RESPONSE #100
+StartDialogueNoSet(Player1)
+END
+
+//Unscripted Talks
+
+// After Bandit Camp
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    GlobalGT("Chapter","GLOBAL",%tutu_chapter_3%)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    OR(2)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",2)
+    Global("TIMaethBandits","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaethBandits","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    GlobalGT("Chapter","GLOBAL",%tutu_chapter_3%)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    OR(2)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",2)
+THEN
+  RESPONSE #100
+      PlaySong(0)
+      PlaySound(0)
+      StartDialogNoSet(Player1)
+END
+
+// After Clearing Cloakwood
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    GlobalGT("Chapter","GLOBAL",%tutu_chapter_4%)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    OR(2)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",2)
+    Global("TIMaethCloakwood","GLOBAL",0)
+THEN
+  RESPONSE #100
+    Global("TIMaethCloakwood","GLOBAL",1)
+END
+
+IF
+    InParty(Myself)
+    See(Player1)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    !StateCheck(Player1,CD_STATE_NOTVALID)
+    CombatCounter(0)
+    !See([ENEMY])
+    GlobalGT("Chapter","GLOBAL",%tutu_chapter_4%)
+    Global("TIMaethFriendActive","GLOBAL",1)
+    OR(2)
+    Global("TIMaethRomanceActive","GLOBAL",1)
+    Global("TIMaethRomanceActive","GLOBAL",2)
+THEN
+  RESPONSE #100
+      PlaySong(0)
+      PlaySound(0)
+      StartDialogNoSet(Player1)
+END
+
+//Area: %Temple_SongoftheMorning%
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TIMaeth_temple","GLOBAL",0)
+    AreaCheck("%Temple_SongoftheMorning%")
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaeth_temple","GLOBAL",1)
+END
+
+//Area: %NashkelMines_L1%
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TIMaeth_mines","GLOBAL",0)
+    AreaCheck("%NashkelMines_L1%")
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaeth_mines","GLOBAL",1)
+END
+
+//Area %ValleyoftheTombs_Tomb%
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TIMaeth_valley","GLOBAL",0)
+    AreaCheck("%ValleyoftheTombs_Tomb%")
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaeth_valley","GLOBAL",1)
+END
+
+//Area %CloakwoodMines_L4% sub area: shrine to Bhaal (room NW of bedroom adjacent to elevator)
+/*
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("T2Val_bhaal","GLOBAL",1)
+    AreaCheck("%CloakwoodMines_L4%")
+THEN
+  RESPONSE #100
+    SetGlobal("T2Val_bhaal","GLOBAL",2)
+END  */
+
+//(If you flood the mine without freeing the slaves)
+/* Given Sir Tybalt's presence, this may not be needed
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TIMaeth_flood","GLOBAL",0)
+    !Global("FREESLAV","GLOBAL",1)
+    GlobalGT("FLOODED","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaeth_flood","GLOBAL",1)
+END
+
+//Area %Candlekeep_Library_L1%
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TIMaeth_candlekeep","GLOBAL",0)
+    AreaCheck("%Candlekeep_Library_L1%")
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaeth_candlekeep","GLOBAL",1)
+END
+
+//(When Charname finds Gorion's letter - Shadowkeeper gave me an error when looking up the item code, and Tutu triggers a dialogue when you pick up the letter, and only if Global("T2ValFriendship","GLOBAL",1))
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TIMaeth_letter","GLOBAL",0)
+    PartyHasItem("%tutu_var%SCRL2J")
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaeth_letter","GLOBAL",1)
+END
+
+//In inventory: POTN48.itm
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TIMaeth_potion","GLOBAL",0)
+    PartyHasItem("POTN48")
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaeth_potion","GLOBAL",1)
+END
+
+//In inventory: BOOK03.itm, BOOK04.itm, BOOK05.itm, BOOK06.itm BOOK07.itm, or BOOK08.itm. Should only fire once regardless of which book you put in.
+IF
+    InParty(Myself)
+    !StateCheck(Myself,CD_STATE_NOTVALID)
+    Global("TIMaeth_book","GLOBAL",0)
+    OR(6)
+      PartyHasItem("BOOK03")
+      PartyHasItem("BOOK04")
+      PartyHasItem("BOOK05")
+      PartyHasItem("BOOK06")
+      PartyHasItem("BOOK07")
+      PartyHasItem("BOOK08")
+THEN
+  RESPONSE #100
+    SetGlobal("TIMaeth_book","GLOBAL",1)
+END
+*/
